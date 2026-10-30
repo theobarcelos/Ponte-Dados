@@ -6,7 +6,7 @@ export default function Cadastro(){
     
     return(
         <>
-        <img src="/img/logo.jpeg" style={{width: "500px"}} alt="" />
+        <img src="/img/logo-without-bg.png" style={{width: "500px"}} alt="" />
             <CustomInput 
                 label="Código de acesso" 
                 type="text" 

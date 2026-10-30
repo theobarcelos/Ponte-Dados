@@ -1,4 +1,9 @@
-.input{
-    color: red;
-    background-color: black;
+.caixadetexto{
+    width: 50%;
+    border: 0.5px solid #B3B3B3
+}
+
+.caixadetexto:focus{
+    border: 1px solid #0F172A;
+    box-shadow: none;
 }

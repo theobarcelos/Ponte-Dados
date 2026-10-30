@@ -1,10 +1,10 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
+  --foreground: #171717;
 }
 
-
 body {
-  font-family: "Be Vietnam Pro", sans-serif;
+  font-family: 'Be Vietnam Pro', sans-serif;
 }
