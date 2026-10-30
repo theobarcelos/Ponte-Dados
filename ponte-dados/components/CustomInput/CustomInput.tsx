@@ -16,7 +16,7 @@ export const CustomInput = (props: CustomInputProps) => {
 
     return(
         <>
-            <Form.Group className="mb-3">
+            <Form.Group className={ styles.containerText}>
                 <Form.Label htmlFor={ id }> { label } </Form.Label>
                 <Form.Control
                 type={ type }
