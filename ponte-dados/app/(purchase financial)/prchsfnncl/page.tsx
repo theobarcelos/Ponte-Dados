@@ -1,10 +1,21 @@
+'use client';
+
+import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
+import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
 import { CustomNavbar } from "@/components/CustomNavbar/CustomNavbar";
 
-export default function purchaseFinancial(){
+import { useRouter } from "next/navigation";
 
-    // const router = useRouter();
-    
-    return(
-        <CustomNavbar hrefLogo="./prchsfnncl" />
+export default function purchaseFinancial() {
+
+    const router = useRouter();
+
+    return (
+        <>
+            <CustomNavbar hrefLogo="./prchsfnncl" />
+            <CustomContainer>
+                <CustomButtonIcon text="Novo Produto" src="/icons/plus.svg" />
+            </CustomContainer>
+        </>
     )
 }

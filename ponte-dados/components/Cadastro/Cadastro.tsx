@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomButton } from "@/components/CustomButton/CustomButton";
-import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
+import { CustomContainerLog } from "@/components/CustomContainerLog/CustomContainerLog";
 import { CustomInput } from "@/components/CustomInput/CustomInput";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export default function Cadastro(){
     const router = useRouter();
     
     return(
-        <CustomContainer>
+        <CustomContainerLog>
             <img src="/img/logo-without-bg.png" style={{width: "500px"}} alt="" />
                 <CustomInput
                     label="Código de acesso"
@@ -45,6 +45,6 @@ export default function Cadastro(){
                         : () => router.push("./")
                         }
                 />
-        </CustomContainer>
+        </CustomContainerLog>
     )
 }

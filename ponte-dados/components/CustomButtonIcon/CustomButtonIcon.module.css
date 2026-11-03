@@ -1,0 +1,15 @@
+.img{
+    width: 60px;
+    align-self: center;
+}
+
+.botao{
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 15%;
+    padding: 20px;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}

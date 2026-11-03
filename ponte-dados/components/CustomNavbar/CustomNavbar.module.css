@@ -2,17 +2,27 @@
     width: 200px;
     margin: 0;
     padding: 0;
+    
+}
+
+:global(.container){
+    gap: 50px;
+    margin-left: 5%;
+    padding: 0;
+}
+
+:global(.navbar-collapse .navbar-nav){
+    gap: 20px;
 }
 
 :global(.nav-link){
-    margin-left: 30px;
     border-radius: 16px;
-    transition: 1s;
+    transition: 0.5s;
     padding: 10px;
 }
 
 :global(.nav-link):hover{
     background-color: var(--azulPrincipal);
-    color: white;
-    transition: 1s
+    color: var(--branco);
+    transition: 0.5s;
 }
