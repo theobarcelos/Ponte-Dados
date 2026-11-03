@@ -1,7 +1,10 @@
-import { CustomButton } from "@/components/CustomButton/CustomButton";
+import { CustomNavbar } from "@/components/CustomNavbar/CustomNavbar";
 
 export default function purchaseFinancial(){
+
+    // const router = useRouter();
+    
     return(
-        <CustomButton text="sim" ></CustomButton>
+        <CustomNavbar hrefLogo="./prchsfnncl" />
     )
 }

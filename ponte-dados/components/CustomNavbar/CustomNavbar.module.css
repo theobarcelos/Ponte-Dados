@@ -1,0 +1,18 @@
+.logo{
+    width: 200px;
+    margin: 0;
+    padding: 0;
+}
+
+:global(.nav-link){
+    margin-left: 30px;
+    border-radius: 16px;
+    transition: 1s;
+    padding: 10px;
+}
+
+:global(.nav-link):hover{
+    background-color: var(--azulPrincipal);
+    color: white;
+    transition: 1s
+}
