@@ -1,0 +1,8 @@
+@import url('@/app/globals.css');
+
+.botao{
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 30%;
+    font-size: 20px;
+}

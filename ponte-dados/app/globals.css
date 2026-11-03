@@ -1,10 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --branco: #ffffff;
   --foreground: #171717;
+  --azulPrincipal: #2563EA;
+  --azulEscuro: #0F172A; 
+  --verde: #22C55E;
 }
 
 body {
   font-family: 'Be Vietnam Pro', sans-serif;
 }
+
+
