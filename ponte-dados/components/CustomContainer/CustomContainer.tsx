@@ -12,12 +12,14 @@ export const CustomContainer = (props: CustomContainerProps) => {
 
     return (
         <>
-            <div className={
-                id === "linha" ? styles.container_fxrow
-                : id === "log" ? styles.container_log
-                : styles.container
-            }
-                id={id}>
+            <div
+                className={
+                    id === "linha" ? styles.container_fxrow
+                        : id === "log" ? styles.container_log
+                            : styles.container
+                }
+                id={id}
+            >
                 <h1>{title}</h1>
                 {...children}
             </div>

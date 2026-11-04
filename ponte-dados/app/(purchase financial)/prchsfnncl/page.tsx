@@ -17,9 +17,9 @@ export default function purchaseFinancial() {
             <CustomContainer id="coluna">
                 <CustomButtonIcon text="Novo Produto" src="/icons/plus.svg" />
                 <CustomContainer id="linha">
-                    <CustomCard />
-                    <CustomCard />
-                    <CustomCard />
+                    <CustomCard title="Novas compras" info="12 Pedidos" text="Aguardando aprovação"/>
+                    <CustomCard title="Em trânsito" info="08 Pedidos" text="Enviados"/>
+                    <CustomCard title="Recebidos" info="03 Pedidos" text="Entregues"/>
                 </CustomContainer>
             </CustomContainer>
         </>

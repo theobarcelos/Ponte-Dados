@@ -1,24 +1,28 @@
 'use client';
 
 import Card from "react-bootstrap/Card";
+import styles from "./CustomCard.module.css";
 
 interface CustomCardProps {
-
+    info: string;
+    title: string;
+    text: string;
 }
 
 export const CustomCard = (props: CustomCardProps) => {
 
+    const {title, text, info} = props;
+
     return (
-        <Card style={{ width: '18rem' }}>
-            <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-                <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </Card.Text>
-                <Card.Link href="#">Card Link</Card.Link>
-                <Card.Link href="#">Another Link</Card.Link>
+        <Card className={
+            title === "Recebidos" ? styles.recebido
+                : title === "Em trânsito" ? styles.transito
+                    : styles.nova_compra
+        }>
+            <Card.Body className={ styles.corpo }>
+                <Card.Subtitle className={styles.title}> { title } </Card.Subtitle>
+                <Card.Title className={styles.info}> { info } </Card.Title>
+                <Card.Text className={styles.text}> { text } </Card.Text>
             </Card.Body>
         </Card>
     )
