@@ -6,7 +6,7 @@
 .botao{
     background-color: var(--azulPrincipal);
     border: 0px;
-    width: 15%;
+    width: 20%;
     padding: 20px;
     font-size: 30px;
     display: flex;
