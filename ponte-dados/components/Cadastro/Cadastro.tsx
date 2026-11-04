@@ -5,7 +5,6 @@ import { CustomContainerLog } from "@/components/CustomContainerLog/CustomContai
 import { CustomInput } from "@/components/CustomInput/CustomInput";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styles from "./cadastro.module.css";
 
 export default function Cadastro(){  
 
