@@ -4,7 +4,7 @@ import styles from "./CustomContainer.module.css";
 interface CustomContainerProps {
     children: React.ReactNode[];
     title?: string;
-    id?: "coluna" | "linha" | "log";
+    id?: "coluna" | "linha" | "log" | "form";
 }
 
 export const CustomContainer = (props: CustomContainerProps) => {
@@ -16,11 +16,11 @@ export const CustomContainer = (props: CustomContainerProps) => {
                 className={
                     id === "linha" ? styles.container_fxrow
                         : id === "log" ? styles.container_log
-                            : styles.container
+                            : id === "form" ? styles.container_form
+                                : styles.container
                 }
                 id={id}
-            >
-                <h1>{title}</h1>
+            >   <h1>{title}</h1>
                 {...children}
             </div>
         </>

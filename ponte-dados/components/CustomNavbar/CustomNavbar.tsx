@@ -15,7 +15,7 @@ export const CustomNavbar = (props: CustomNavbarInterface) => {
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand href={hrefLogo}>
-                        <img src="/img/logo-without-bg.png" alt="" className={styles.logo} />
+                        <img src="/img/logo_rose.png" alt="" className={styles.logo} />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
