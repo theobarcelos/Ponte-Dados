@@ -1,5 +1,6 @@
 'use client';
 
+import { CustomButton } from "@/components/CustomButton/CustomButton";
 import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
 import { CustomCard } from "@/components/CustomCard/CustomCard";
 import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
@@ -21,6 +22,7 @@ export default function purchaseFinancial() {
                     <CustomCard title="Em trânsito" info="08 Pedidos" text="Enviados"/>
                     <CustomCard title="Recebidos" info="03 Pedidos" text="Entregues"/>
                 </CustomContainer>
+                <CustomButton text="Visualizar status de pedidos" name="status" ></CustomButton>
             </CustomContainer>
         </>
     )

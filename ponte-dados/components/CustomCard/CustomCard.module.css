@@ -1,21 +1,21 @@
 .nova_compra{
     border-top: 12px solid var(--azulPrincipal);
     border-radius: var(--bs-border-radius);
-    width: 20%;
+    width: 25%;
     padding: 20px;
 }
 
 .transito{
     border-top: 12px solid var(--laranja);
     border-radius: var(--bs-border-radius);
-    width: 20%;
+    width: 25%;
     padding: 20px;
 }
 
 .recebido{
     border-top: 12px solid var(--verde);
     border-radius: var(--bs-border-radius);
-    width: 20%;
+    width: 25%;
     padding: 20px;
 }
 
@@ -32,10 +32,10 @@
 .info{
     font-size: 40px;
     margin: 2rem 0 2rem 0;
-    text-wrap: nowrap;
+    /* text-wrap: nowrap; */
 }
 
 .text{
     font-size: 20px;
-    text-wrap: nowrap;
+    /* text-wrap: nowrap; */
 }

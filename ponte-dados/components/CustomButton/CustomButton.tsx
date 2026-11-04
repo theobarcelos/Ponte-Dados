@@ -18,7 +18,7 @@ export const CustomButton = (props: CustomButtonProps) => {
             name={ name }
             onClick={ onclick }
             type={ type }
-            className={ styles.botao }
+            className={ name==="status"? styles.botao_status : styles.botao }
             variant="primary"
             > { text }
             </Button>

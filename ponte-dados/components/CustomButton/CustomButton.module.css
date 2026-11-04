@@ -6,3 +6,11 @@
     width: 30%;
     font-size: 20px;
 }
+
+.botao_status{
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 30%;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
