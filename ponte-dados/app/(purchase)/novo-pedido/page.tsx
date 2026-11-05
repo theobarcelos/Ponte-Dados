@@ -5,6 +5,8 @@ import { CustomInput } from "@/components/CustomInput/CustomInput";
 import { FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./style.module.css";
+import { CustomButton } from "@/components/CustomButton/CustomButton";
+import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
 
 interface IProduto {
     nome: string;
@@ -52,11 +54,11 @@ export default function novoPedido() {
 
     const formik = useFormik<INovoPedido>({
         initialValues: {
-            nf: "", 
-            fornecedor: "", 
-            pedido: "", 
-            solicitante: "", 
-            dataPrevista: undefined, 
+            nf: "",
+            fornecedor: "",
+            pedido: "",
+            solicitante: "",
+            dataPrevista: undefined,
             produtos: [{ ...produtoInicial }]
         },
 
@@ -85,9 +87,9 @@ export default function novoPedido() {
                     <CustomContainer id="form">
                         <h2>Dados do pedido</h2>
                         <table className={styles.tabela}>
-                            <tbody style={{ display: "flex", flexDirection: "column", alignContent: "space-between", width: "100%" }}>
+                            <tbody>
                                 <tr className={styles.tr}>
-                                    <td>
+                                    <td className={styles.td}>
                                         <CustomInput
                                             type="text"
                                             change={formik.handleChange}
@@ -97,7 +99,7 @@ export default function novoPedido() {
                                             placeholder="Nota Fiscal"
                                         />
                                     </td>
-                                    <td>
+                                    <td className={styles.td}>
                                         <CustomInput
                                             type="text"
                                             change={formik.handleChange}
@@ -109,7 +111,7 @@ export default function novoPedido() {
                                     </td>
                                 </tr>
                                 <tr className={styles.tr}>
-                                    <td>
+                                    <td className={styles.td}>
                                         <CustomInput
                                             type="text"
                                             change={formik.handleChange}
@@ -119,7 +121,7 @@ export default function novoPedido() {
                                             placeholder="Pedido"
                                         />
                                     </td>
-                                    <td>
+                                    <td className={styles.td}>
                                         <CustomInput
                                             type="text"
                                             change={formik.handleChange}
@@ -136,20 +138,77 @@ export default function novoPedido() {
                     <CustomContainer id="form">
                         <h2>Previsão de recebimento</h2>
                         <table className={styles.tabela}>
-                            <tbody style={{ display: "flex", flexDirection: "column", alignContent: "space-between", width: "100%" }}>
+                            <tbody>
                                 <tr className={styles.tr}>
-                                    <td>
+                                    <td className={styles.td}>
                                         <CustomInput
                                             type="date"
                                             change={formik.handleChange}
                                             label="Data Prevista"
-                                            name="dataPrev"
+                                            name="dataPrevista"
                                             id="dataPrev_form"
                                         />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </CustomContainer>
+                    <CustomContainer id="form">
+                        <h2>Dados do(s) Produto(s)</h2>
+                        {formik.values.produtos.map((_, index) => (
+                            <div key={index} style={{ width: "100%", marginBottom: "16px" }}>
+                                <h3>Produto {index + 1}</h3>
+                                <table className={styles.tabela}>
+                                    <tbody>
+                                        <tr className={styles.tr}>
+                                            <td className={styles.td}>
+                                                <CustomInput
+                                                    type="text"
+                                                    change={formik.handleChange}
+                                                    label="Nome"
+                                                    name={`produtos[${index}].nome`}
+                                                    id={`nome_produto_${index}_form`}
+                                                    placeholder="Nome"
+                                                />
+                                            </td>
+                                            <td className={styles.td}>
+                                                <CustomInput 
+                                                    type="number" 
+                                                    change={formik.handleChange} 
+                                                    label="Quantidade" 
+                                                    name={`produtos[${index}].quantidade`} 
+                                                    id={`quantidade_produto_${index}_form`} 
+                                                    placeholder="Quantidade"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr className={styles.tr}>
+                                            <td className={styles.td}>
+                                                <CustomInput 
+                                                    type="text" 
+                                                    change={formik.handleChange} 
+                                                    label="Modelo" 
+                                                    name={`produtos[${index}].modelo`} 
+                                                    id={`modelo_produto_${index}_form`} 
+                                                    placeholder="Modelo"
+                                                />
+                                            </td>
+                                            <td className={styles.td}>
+                                                <CustomInput 
+                                                    type="text" 
+                                                    change={formik.handleChange} 
+                                                    label="Marca" 
+                                                    name={`produtos[${index}].marca`} 
+                                                    id={`marca_produto_${index}_form`} 
+                                                    placeholder="Marca"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        ))}
+                        <CustomButton text="Adicionar novo produto" type="button" onclick={adicionarNovoProduto}></CustomButton>
                     </CustomContainer>
                 </form>
             </FormikProvider>

@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    margin-bottom: 30px;
 }
 
 .tabela{
@@ -15,4 +16,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.td{
+    width: 40%;
 }
