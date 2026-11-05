@@ -13,10 +13,12 @@ interface CustomInputProps{
 
 export const CustomInput = (props: CustomInputProps) => {
     const {type, label, id, name, placeholder, change} = props;
+    
+    const form = id.includes('_form');
 
     return(
         <>
-            <Form.Group className={ styles.containerText}>
+            <Form.Group className={ !form ? styles.containerText : styles.containerTextForm }>
                 <Form.Label htmlFor={ id }> { label } </Form.Label>
                 <Form.Control
                 type={ type }

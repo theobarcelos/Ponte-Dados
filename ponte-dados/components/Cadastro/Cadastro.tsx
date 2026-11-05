@@ -13,7 +13,7 @@ export default function Cadastro() {
 
     return (
         <CustomContainer id="log">
-            <img src="/img/logo-without-bg.png" style={{ width: "500px" }} alt="" />
+            <img src="/img/logo_rose.png" style={{ width: "500px", marginBottom: "100px" }} alt="" />
             {(codigo === "lgstcs") && (
                 <p style={{ color: "var(--verde)", margin: "0" }}>Código válido para o setor de logística!</p>
             )}
@@ -40,8 +40,8 @@ export default function Cadastro() {
                 type="submit"
                 text="Entrar"
                 onclick={
-                    codigo === "lgstcs" ? () => router.push("/pnt-dds/lgstcs")
-                        : codigo === "prchs" || codigo === "fnncl" ? () => router.push("/pnt-dds/prchsfnncl")
+                    codigo === "lgstcs" ? () => router.push("/lgstcs")
+                        : codigo === "prchs" || codigo === "fnncl" ? () => router.push("/prchsfnncl")
                             : () => router.push("./")
                 }
             />
