@@ -22,7 +22,7 @@ export const CustomNavbar = (props: CustomNavbarInterface) => {
                         <Nav className="me-auto">
                             <Nav.Link href={hrefLogo}>Início</Nav.Link>
                             {(hrefLogo === "./prchsfnncl") && (
-                                <Nav.Link href="./novoPedido">Novo Pedido</Nav.Link>
+                                <Nav.Link href="./novo-pedido">Novo Pedido</Nav.Link>
                             )}
                             <Nav.Link href="./graficos">Gráficos</Nav.Link>
                             <Nav.Link href="./status">Status</Nav.Link>

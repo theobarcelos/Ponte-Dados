@@ -3,8 +3,15 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 30px; 
     width: 100%;
+    margin-top: 30px;
+}
+
+@media (min-width: 1900) {
+    .container_inicio_media{
+        margin-top: 150px;
+    }
 }
 
 .container_fxrow{

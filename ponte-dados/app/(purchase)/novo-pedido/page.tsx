@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./style.module.css";
 import { CustomButton } from "@/components/CustomButton/CustomButton";
 import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
+import { useRouter } from "next/navigation";
 
 interface IProduto {
     nome: string;
@@ -33,6 +34,8 @@ const produtoInicial: IProduto = {
 
 
 export default function novoPedido() {
+
+    const router = useRouter();
 
     const novoPedidoSchema = Yup.object({
         nf: Yup.string().required("Campo obrigatório!"),
@@ -73,6 +76,15 @@ export default function novoPedido() {
             ...formik.values.produtos,
             { ...produtoInicial }
         ])
+    }
+
+    const removerProduto = () => {
+        if (formik.values.produtos.length > 1) {
+            formik.setFieldValue(
+                "produtos",
+                formik.values.produtos.slice(0, -1)
+            )
+        }
     }
 
 
@@ -172,44 +184,76 @@ export default function novoPedido() {
                                                 />
                                             </td>
                                             <td className={styles.td}>
-                                                <CustomInput 
-                                                    type="number" 
-                                                    change={formik.handleChange} 
-                                                    label="Quantidade" 
-                                                    name={`produtos[${index}].quantidade`} 
-                                                    id={`quantidade_produto_${index}_form`} 
+                                                <CustomInput
+                                                    type="number"
+                                                    change={formik.handleChange}
+                                                    label="Quantidade"
+                                                    name={`produtos[${index}].quantidade`}
+                                                    id={`quantidade_produto_${index}_form`}
                                                     placeholder="Quantidade"
                                                 />
                                             </td>
                                         </tr>
                                         <tr className={styles.tr}>
                                             <td className={styles.td}>
-                                                <CustomInput 
-                                                    type="text" 
-                                                    change={formik.handleChange} 
-                                                    label="Modelo" 
-                                                    name={`produtos[${index}].modelo`} 
-                                                    id={`modelo_produto_${index}_form`} 
+                                                <CustomInput
+                                                    type="text"
+                                                    change={formik.handleChange}
+                                                    label="Modelo"
+                                                    name={`produtos[${index}].modelo`}
+                                                    id={`modelo_produto_${index}_form`}
                                                     placeholder="Modelo"
                                                 />
                                             </td>
                                             <td className={styles.td}>
-                                                <CustomInput 
-                                                    type="text" 
-                                                    change={formik.handleChange} 
-                                                    label="Marca" 
-                                                    name={`produtos[${index}].marca`} 
-                                                    id={`marca_produto_${index}_form`} 
+                                                <CustomInput
+                                                    type="text"
+                                                    change={formik.handleChange}
+                                                    label="Marca"
+                                                    name={`produtos[${index}].marca`}
+                                                    id={`marca_produto_${index}_form`}
                                                     placeholder="Marca"
                                                 />
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div className={styles.btn_container}>
+                                    <CustomButtonIcon
+                                        src="/icons/delete.svg"
+                                        name="delete_form"
+                                        text={`Remover`}
+                                        type="button"
+                                        onclick={removerProduto} />
+                                </div>
                             </div>
                         ))}
-                        <CustomButton text="Adicionar novo produto" type="button" onclick={adicionarNovoProduto}></CustomButton>
                     </CustomContainer>
+                    <CustomContainer id="linha">
+                        <CustomButtonIcon
+                            text="Adicionar novo produto"
+                            src="/icons/add.svg"
+                            type="button"
+                            onclick={adicionarNovoProduto}
+                            name="add_produto_form" />
+                        <CustomButtonIcon
+                            text="Cadastrar pedido"
+                            src="/icons/save.svg"
+                            type="button"
+                            name="cadastrar_pedido_form" />
+                        <CustomButtonIcon
+                            text="Importar arquivo .CSV"
+                            src="/icons/csv.svg"
+                            type="button"
+                            name="import_csv_form" />
+                        <CustomButtonIcon
+                            text="Cancelar"
+                            type="button"
+                            src="/icons/cancel.svg"
+                            onclick={() => router.push("./prchsfnncl")}
+                            name="cancelar_form" />
+                    </CustomContainer>
+
                 </form>
             </FormikProvider>
         </CustomContainer>

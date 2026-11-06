@@ -14,3 +14,24 @@
     font-size: 20px;
     margin-bottom: 10px;
 }
+
+.botao_addprod{
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 20%;
+    font-size: 20px;
+}
+
+.botao_cancelar{
+    background-color: var(--vermelho) !important;
+    border: 0px;
+    width: 10%;
+    font-size: 20px;
+}
+
+.botao_importcsv{
+    background-color: var(--verde) !important;
+    border: 0px;
+    width: 20%;
+    font-size: 20px;
+}

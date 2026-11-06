@@ -3,7 +3,7 @@ import styles from "./CustomContainer.module.css";
 
 interface CustomContainerProps {
     children: React.ReactNode;
-    id?: "coluna" | "linha" | "log" | "form";
+    id?: "coluna" | "linha" | "log" | "form" | "inicio";
 }
 
 export const CustomContainer = (props: CustomContainerProps) => {
@@ -16,7 +16,8 @@ export const CustomContainer = (props: CustomContainerProps) => {
                     id === "linha" ? styles.container_fxrow
                         : id === "log" ? styles.container_log
                             : id === "form" ? styles.container_form
-                                : styles.container
+                                : id === "inicio" ? `${styles.container_inicio_media} ${styles.container}`
+                                    : styles.container
                 }
                 id={id}
             >

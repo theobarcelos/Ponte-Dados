@@ -1,9 +1,13 @@
-.img{
+.img {
     width: 60px;
     align-self: center;
 }
 
-.botao{
+.img_form {
+    align-self: center;
+}
+
+.botao {
     background-color: var(--azulPrincipal);
     border: 0px;
     width: 20%;
@@ -12,4 +16,46 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+}
+
+.botao_form {
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 15%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;;
+}
+
+.botao_addprod {
+    background-color: var(--azulPrincipal);
+    border: 0px;
+    width: 18%;
+    font-size: 20px;
+}
+
+.botao_cancelar {
+    background-color: var(--vermelho) !important;
+    border: 0px;
+    font-size: 20px;
+    width: 10%;
+}
+
+.botao_importcsv {
+    background-color: var(--verde) !important;
+    border: 0px;
+    width: 15%;
+    font-size: 20px;
+}
+
+@media (max-width: 1800px) {
+    .botao_addprod {
+        width: 20%;
+    }
+
+    .botao_importcsv {
+        width: 20%;
+    }
 }
