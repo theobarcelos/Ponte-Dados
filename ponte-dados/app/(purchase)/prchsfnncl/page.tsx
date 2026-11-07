@@ -4,8 +4,6 @@ import Home from "@/components/Home/Home";
 
 export default function purchaseFinancial() {
     return (
-        <>
-            <Home/>
-        </>
+        <Home id="inicio_prchs"/>
     )
 }

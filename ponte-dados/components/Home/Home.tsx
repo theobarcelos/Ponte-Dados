@@ -5,18 +5,24 @@ import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon
 import { CustomCard } from "@/components/CustomCard/CustomCard";
 import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
 import { useRouter } from "next/navigation";
-import purchaseFinancial from "@/app/(purchase)/prchsfnncl/page";
+// import purchaseFinancial from "@/app/(purchase)/prchsfnncl/page";
 
-export default function Home() {
+interface HomeProps{
+    id: string;
+}
+
+export default function Home(props: HomeProps) {
+
+    const id = props.id;
 
     const router = useRouter();
 
     return (
         <>
-            <CustomContainer id="inicio">
-                {(purchaseFinancial())} && {
+            <CustomContainer id={ id }>
+                { (id === "inicio_prchs")  && (
                     <CustomButtonIcon text="Novo Produto" src="/icons/plus.svg" name="novo_produto" onclick={() => router.push("/novo-pedido")} />
-                }
+                    )}
                 <CustomContainer id="linha">
                     <CustomCard title="Novas compras" info="12 Pedidos" text="Aguardando aprovação" />
                     <CustomCard title="Em trânsito" info="08 Pedidos" text="Enviados" />

@@ -1,8 +1,8 @@
 'use client';
-import { CustomNavbar } from "@/components/CustomNavbar/CustomNavbar";
+import Home from "@/components/Home/Home";
 
 export default function lgstcs() {
     return(
-        <h1>Ola mundo</h1>
+        <Home id="inicio"/>
     )
 }
