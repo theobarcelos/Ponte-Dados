@@ -1,9 +1,9 @@
 'use client';
 import styles from "./CustomContainer.module.css";
 
-interface CustomContainerProps {
-    children: React.ReactNode;
-    id?: "coluna" | "linha" | "log" | "form" | "inicio_prchs" | "inicio" | string;
+export interface CustomContainerProps {
+    children?: React.ReactNode;
+    id?: "coluna" | "linha" | "log" | "form" | "inicio_prchs";
 }
 
 export const CustomContainer = (props: CustomContainerProps) => {

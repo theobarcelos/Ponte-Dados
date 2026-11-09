@@ -2,13 +2,14 @@
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import styles from "./CustomNavbar.module.css";
 
-interface CustomNavbarInterface {
+export interface CustomNavbarInterface {
     hrefLogo: string;
+    mostrarNovoPedido: boolean;
 }
 
 export const CustomNavbar = (props: CustomNavbarInterface) => {
 
-    const { hrefLogo } = props;
+    const { hrefLogo, mostrarNovoPedido } = props;
 
     return (
         <>
@@ -21,11 +22,11 @@ export const CustomNavbar = (props: CustomNavbarInterface) => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href={hrefLogo}>Início</Nav.Link>
-                            {(hrefLogo === "./prchsfnncl") && (
-                                <Nav.Link href="./novo-pedido">Novo Pedido</Nav.Link>
+                            {mostrarNovoPedido && (
+                                <Nav.Link href="/novo-pedido">Novo Pedido</Nav.Link>
                             )}
-                            <Nav.Link href="./graficos">Gráficos</Nav.Link>
-                            <Nav.Link href="./status">Status</Nav.Link>
+                            <Nav.Link href="/graficos">Gráficos</Nav.Link>
+                            <Nav.Link href="/status">Status</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
