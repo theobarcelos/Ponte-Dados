@@ -8,6 +8,7 @@ import styles from "./style.module.css";
 import { CustomButton } from "@/components/CustomButton/CustomButton";
 import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 interface IProduto {
     nome: string;
@@ -36,6 +37,7 @@ const produtoInicial: IProduto = {
 export default function novoPedido() {
 
     const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const novoPedidoSchema = Yup.object({
         nf: Yup.string().required("Campo obrigatório!"),
@@ -87,8 +89,62 @@ export default function novoPedido() {
         }
     }
 
+    const importarCSV = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
 
+        const reader = new FileReader();
 
+        reader.onload = (e) => {
+            const conteudo = e.target?.result as string;
+            if (!conteudo) return;
+
+            const linhas = conteudo
+                .split(/\r?n/)
+                .map((linha) => linha.trim())
+                .filter((linha) => linha.length > 0);
+
+            if (linhas.length === 0) return;
+
+            const primeiraLinha = linhas[0].toLowerCase();
+            const possuiCabecalho =
+                primeiraLinha.includes("nome") ||
+                primeiraLinha.includes("quantidade") ||
+                primeiraLinha.includes("modelo");
+
+            const linhasDados = possuiCabecalho ? linhas.slice(1) : linhas;
+
+            const produtosImportados: IProduto[] = linhasDados.map((linha) => {
+                const [nome = "", quantidade = "", modelo = "", marca = ""] = linha
+                    .split(/[;,]/)
+                    .map((item) => item.trim());
+
+                return {
+                    nome,
+                    quantidade: quantidade !== "" ? Number(quantidade) : "",
+                    modelo,
+                    marca
+                };
+            });
+
+            if (produtosImportados.length > 0) {
+                const primeiroProdutoVazio =
+                    formik.values.produtos.length === 1 &&
+                    !formik.values.produtos[0].nome &&
+                    !formik.values.produtos[0].quantidade &&
+                    !formik.values.produtos[0].modelo &&
+                    !formik.values.produtos[0].marca;
+
+                const novaListaProdutos = primeiroProdutoVazio ? produtosImportados : [...formik.values.produtos, ...produtosImportados];
+
+                formik.setFieldValue("produtos", novaListaProdutos);
+            }
+
+            event.target.value = "";
+        };
+
+        reader.readAsText(file, "UTF-8");
+    };
 
     return (
         <CustomContainer>
@@ -245,7 +301,14 @@ export default function novoPedido() {
                             text="Importar arquivo .CSV"
                             src="/icons/csv.svg"
                             type="button"
-                            name="import_csv_form" />
+                            name="import_csv_form"
+                            onclick={() => fileInputRef.current?.click()} />
+                        <input 
+                            ref={fileInputRef}
+                            type="file"
+                            accept=".csv"
+                            onChange={importarCSV}
+                            style={{display: "none"}} />
                         <CustomButtonIcon
                             text="Cancelar"
                             type="button"
@@ -253,7 +316,6 @@ export default function novoPedido() {
                             onclick={() => router.push("./prchsfnncl")}
                             name="cancelar_form" />
                     </CustomContainer>
-
                 </form>
             </FormikProvider>
         </CustomContainer>
