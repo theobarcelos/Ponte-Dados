@@ -1,9 +1,10 @@
 'use client';
 
 import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
-import { CustomInput } from "@/components/CustomInput/CustomInput";
 import styles from "./style.module.css";
-import { Collapse } from "react-bootstrap";
+import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
+
+
 
 export default function status() {
 
@@ -38,7 +39,10 @@ export default function status() {
                                     <option value="">Não</option>
                                 </select>
                             </td>
-                            <td><button>Sim ou nao</button></td>
+                            <td style={{display: "flex", justifyContent: "space-around"}}>
+                                <CustomButtonIcon src="/icons/check.svg" name="check" img="sim"/>
+                                <CustomButtonIcon src="/icons/close.svg" name="refuse" img="nao" />
+                            </td>
                             <td>Icone de detalhes</td>
                         </tr>
                     </tbody>

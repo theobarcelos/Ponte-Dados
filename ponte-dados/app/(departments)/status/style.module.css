@@ -1,10 +1,7 @@
 .table{
     width: 100%;
-    border-collapse: collapse;
-    border: 1px solid black;
 }
 
 .table th, .table td{
     border: 1px solid black;
-    border-radius: 16px;
 }

@@ -59,3 +59,19 @@
         width: 20%;
     }
 }
+
+.botao_status{
+    border: none;
+}
+
+.botao_check{
+    background-color: var(--verde) !important;
+}
+
+.botao_refuse{
+    background-color: var(--vermelho) !important;
+}
+
+.img_status{
+    width: 100%;
+}
