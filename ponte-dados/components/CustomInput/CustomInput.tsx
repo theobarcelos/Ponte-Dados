@@ -6,13 +6,14 @@ interface CustomInputProps{
     type: string;
     label: string;
     id: string;
+    value?: string | number;
     name?: string;
     placeholder?: string;
     change?: (e: any) => void;
 }
 
 export const CustomInput = (props: CustomInputProps) => {
-    const {type, label, id, name, placeholder, change} = props;
+    const {type, label, id, name, placeholder, change, value} = props;
     
     const form = id.includes('_form');
 
@@ -27,6 +28,7 @@ export const CustomInput = (props: CustomInputProps) => {
                 id={ id }
                 placeholder={ placeholder }
                 onChange={ change }
+                value={ value }
                 >
                 </Form.Control>
             </Form.Group>

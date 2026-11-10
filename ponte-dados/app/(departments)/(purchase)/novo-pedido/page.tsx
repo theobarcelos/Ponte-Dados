@@ -5,16 +5,13 @@ import { CustomInput } from "@/components/CustomInput/CustomInput";
 import { FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./style.module.css";
-import { CustomButton } from "@/components/CustomButton/CustomButton";
 import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 interface IProduto {
-    nome: string;
+    descricao: string;
     quantidade: number | string;
-    modelo: string;
-    marca: string;
 };
 
 interface INovoPedido {
@@ -27,10 +24,8 @@ interface INovoPedido {
 };
 
 const produtoInicial: IProduto = {
-    nome: "",
-    quantidade: "",
-    modelo: "",
-    marca: "",
+    descricao: "",
+    quantidade: ""
 };
 
 
@@ -47,10 +42,8 @@ export default function novoPedido() {
         dataPrevista: Yup.date().required("Campo obrigatório!"),
         produtos: Yup.array().of(
             Yup.object({
-                nome: Yup.string().required("Campo obrigatório!"),
-                quantidade: Yup.number().required("Campo obrigatório"),
-                modelo: Yup.string().required("Campo obrigatório!"),
-                marca: Yup.string().required("Campo obrigatório!"),
+                descricao: Yup.string().required("Campo obrigatório!"),
+                quantidade: Yup.number().required("Campo obrigatório")
             })
         ).min(1, "Adicione no mínimo 1 produto!")
     })
@@ -100,7 +93,7 @@ export default function novoPedido() {
             if (!conteudo) return;
 
             const linhas = conteudo
-                .split(/\r?n/)
+                .split(/\r?\n/)
                 .map((linha) => linha.trim())
                 .filter((linha) => linha.length > 0);
 
@@ -108,32 +101,28 @@ export default function novoPedido() {
 
             const primeiraLinha = linhas[0].toLowerCase();
             const possuiCabecalho =
-                primeiraLinha.includes("nome") ||
-                primeiraLinha.includes("quantidade") ||
-                primeiraLinha.includes("modelo");
+                primeiraLinha.includes("descricao") ||
+                primeiraLinha.includes("quantidade") || 
+                primeiraLinha.includes("");
 
             const linhasDados = possuiCabecalho ? linhas.slice(1) : linhas;
 
             const produtosImportados: IProduto[] = linhasDados.map((linha) => {
-                const [nome = "", quantidade = "", modelo = "", marca = ""] = linha
+                const [descricao = "", quantidade = ""] = linha
                     .split(/[;,]/)
                     .map((item) => item.trim());
 
                 return {
-                    nome,
+                    descricao,
                     quantidade: quantidade !== "" ? Number(quantidade) : "",
-                    modelo,
-                    marca
                 };
             });
 
             if (produtosImportados.length > 0) {
                 const primeiroProdutoVazio =
                     formik.values.produtos.length === 1 &&
-                    !formik.values.produtos[0].nome &&
-                    !formik.values.produtos[0].quantidade &&
-                    !formik.values.produtos[0].modelo &&
-                    !formik.values.produtos[0].marca;
+                    !formik.values.produtos[0].descricao &&
+                    !formik.values.produtos[0].quantidade
 
                 const novaListaProdutos = primeiroProdutoVazio ? produtosImportados : [...formik.values.produtos, ...produtosImportados];
 
@@ -223,7 +212,7 @@ export default function novoPedido() {
                     </CustomContainer>
                     <CustomContainer id="form">
                         <h2>Dados do(s) Produto(s)</h2>
-                        {formik.values.produtos.map((_, index) => (
+                        {formik.values.produtos.map((produto, index) => (
                             <div key={index} style={{ width: "100%", marginBottom: "16px" }}>
                                 <h3>Produto {index + 1}</h3>
                                 <table className={styles.tabela}>
@@ -233,10 +222,11 @@ export default function novoPedido() {
                                                 <CustomInput
                                                     type="text"
                                                     change={formik.handleChange}
-                                                    label="Nome"
-                                                    name={`produtos[${index}].nome`}
-                                                    id={`nome_produto_${index}_form`}
-                                                    placeholder="Nome"
+                                                    label="Descrição"
+                                                    name={`produtos[${index}].descricao`}
+                                                    id={`descricao_produto_${index}_form`}
+                                                    placeholder="Descrição"
+                                                    value={produto.descricao}
                                                 />
                                             </td>
                                             <td className={styles.td}>
@@ -247,28 +237,7 @@ export default function novoPedido() {
                                                     name={`produtos[${index}].quantidade`}
                                                     id={`quantidade_produto_${index}_form`}
                                                     placeholder="Quantidade"
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr className={styles.tr}>
-                                            <td className={styles.td}>
-                                                <CustomInput
-                                                    type="text"
-                                                    change={formik.handleChange}
-                                                    label="Modelo"
-                                                    name={`produtos[${index}].modelo`}
-                                                    id={`modelo_produto_${index}_form`}
-                                                    placeholder="Modelo"
-                                                />
-                                            </td>
-                                            <td className={styles.td}>
-                                                <CustomInput
-                                                    type="text"
-                                                    change={formik.handleChange}
-                                                    label="Marca"
-                                                    name={`produtos[${index}].marca`}
-                                                    id={`marca_produto_${index}_form`}
-                                                    placeholder="Marca"
+                                                    value={produto.quantidade}
                                                 />
                                             </td>
                                         </tr>
