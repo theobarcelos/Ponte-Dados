@@ -37,7 +37,7 @@ export default function Home(props: CustomContainerProps) {
                 )}
                 <CustomContainer id="linha">
                     <CustomCard title="Em atraso" info="12 Pedidos" text="Atrasados" />
-                    <CustomCard title="Aguardando recebimento" info="08 Pedidos" text="Para serem recebidos" />
+                    <CustomCard title="Aguardando" info="08 Pedidos" text="Para serem recebidos" />
                     <CustomCard title="Recebidos" info="03 Pedidos" text="Entregues" />
                 </CustomContainer>
                 <CustomButton text="Visualizar status de pedidos" name="status" onclick={() => router.push("/status")}></CustomButton>

@@ -16,7 +16,7 @@ export const CustomCard = (props: CustomCardProps) => {
     return (
         <Card className={
             title === "Recebidos" ? styles.recebido
-                : title === "Aguardando recebimento" ? styles.transito
+                : title === "Aguardando" ? styles.transito
                     : styles.em_atraso
                     }>
             <Card.Body className={ styles.corpo }>

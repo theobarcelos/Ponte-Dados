@@ -10,7 +10,6 @@
     border-radius: var(--bs-border-radius);
     width: 25%;
     padding: 20px;
-    text-wrap: nowrap;
 }
 
 .recebido{
@@ -27,16 +26,13 @@
 
 .title{
     font-size: 20px;
-    
 }
 
 .info{
     font-size: 40px;
     margin: 2rem 0 2rem 0;
-    /* text-wrap: nowrap; */
 }
 
 .text{
     font-size: 20px;
-    /* text-wrap: nowrap; */
 }
