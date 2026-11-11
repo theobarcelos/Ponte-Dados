@@ -40,8 +40,8 @@ export default function Cadastro() {
                 type="submit"
                 text="Entrar"
                 onclick={
-                    codigo === "lgstcs" ? () => router.push("/lgstcs")
-                        : codigo === "prchs" || codigo === "fnncl" ? () => router.push("/prchsfnncl")
+                    codigo === "lgstcs" || codigo === "fnncl"  ? () => router.push("/lgstcsfnncl")
+                        : codigo === "prchs"? () => router.push("/prchs")
                             : () => router.push("./")
                 }
             />

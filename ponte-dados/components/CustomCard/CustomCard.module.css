@@ -1,5 +1,5 @@
-.nova_compra{
-    border-top: 12px solid var(--azulPrincipal);
+.em_atraso{
+    border-top: 12px solid var(--vermelho);
     border-radius: var(--bs-border-radius);
     width: 25%;
     padding: 20px;

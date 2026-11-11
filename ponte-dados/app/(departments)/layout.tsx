@@ -28,7 +28,7 @@ export default function layoutHome(props: LayoutHomeProps) {
   return (
     <>
       <CustomNavbar
-        hrefLogo={isCompras ? "/prchsfnncl" : "/lgstcs"}
+        hrefLogo={isCompras ? "/prchs" : "/lgstcsfnncl"}
         mostrarNovoPedido={isCompras} />
         {props.children}
     </>

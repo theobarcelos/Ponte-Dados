@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 interface CustomInputProps{
     type: string;
     label: string;
-    id: string;
+    id: string; 
     value?: string | number;
     name?: string;
     placeholder?: string;

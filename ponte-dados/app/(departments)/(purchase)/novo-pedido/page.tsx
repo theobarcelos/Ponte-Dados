@@ -19,7 +19,7 @@ interface INovoPedido {
     fornecedor?: string;
     pedido?: string;
     solicitante?: string;
-    dataPrevista?: Date;
+    dataPrevista?: string;
     produtos: IProduto[];
 };
 
@@ -56,7 +56,7 @@ export default function novoPedido() {
             fornecedor: "",
             pedido: "",
             solicitante: "",
-            dataPrevista: undefined,
+            dataPrevista: "",
             produtos: [{ ...produtoInicial }]
         },
 
@@ -89,42 +89,100 @@ export default function novoPedido() {
         const reader = new FileReader();
 
         reader.onload = (e) => {
-            const conteudo = e.target?.result as string;
-            if (!conteudo) return;
+            const buffer = e.target?.result as ArrayBuffer;
+            if (!buffer) return;
+
+            // Decodifica em UTF-8 ou faz fallback para Windows-1252 caso salvo em ANSI pelo Excel/SAP
+            let conteudo = "";
+            try {
+                conteudo = new TextDecoder("utf-8", { fatal: true }).decode(buffer);
+            } catch {
+                conteudo = new TextDecoder("windows-1252").decode(buffer);
+            }
 
             const linhas = conteudo
+                .replace(/^\uFEFF/, "") // Remove o BOM do início do arquivo gerado pelo SAP
                 .split(/\r?\n/)
                 .map((linha) => linha.trim())
                 .filter((linha) => linha.length > 0);
 
             if (linhas.length === 0) return;
 
-            const primeiraLinha = linhas[0].toLowerCase();
+            // Usa ';' como separador padrão do SAP (evitando quebrar números decimais com vírgula)
+            const separador = linhas[0].includes(";") ? ";" : ",";
+
+            const cabecalhoCols = linhas[0]
+                .toLowerCase()
+                .split(separador)
+                .map((col) => col.trim());
+
+            const idxData = cabecalhoCols.findIndex(
+                (col) => col.includes("data do documento") || col === "data"
+            );
+            const idxTextoBreve = cabecalhoCols.findIndex(
+                (col) => col.includes("texto breve") || col.includes("descri")
+            );
+            const idxQuantidade = cabecalhoCols.findIndex(
+                (col) =>
+                    col.includes("qtd.do pedido") ||
+                    col.includes("qtd. do pedido") ||
+                    col === "quantidade"
+            );
+
             const possuiCabecalho =
-                primeiraLinha.includes("descricao") ||
-                primeiraLinha.includes("quantidade") || 
-                primeiraLinha.includes("");
+                idxData !== -1 || idxTextoBreve !== -1 || idxQuantidade !== -1;
+
+            // Índices das colunas no relatório padrão do SAP (5, 7 e 14) caso não haja cabeçalho customizado
+            const colData = idxData !== -1 ? idxData : 5;
+            const colTexto = idxTextoBreve !== -1 ? idxTextoBreve : 7;
+            const colQtd = idxQuantidade !== -1 ? idxQuantidade : 14;
 
             const linhasDados = possuiCabecalho ? linhas.slice(1) : linhas;
 
-            const produtosImportados: IProduto[] = linhasDados.map((linha) => {
-                const [descricao = "", quantidade = ""] = linha
-                    .split(/[;,]/)
-                    .map((item) => item.trim());
+            let dataDocumentoExtraida = "";
 
-                return {
-                    descricao,
-                    quantidade: quantidade !== "" ? Number(quantidade) : "",
-                };
-            });
+            const produtosImportados: IProduto[] = linhasDados
+                .map((linha) => {
+                    const colunas = linha.split(separador).map((item) => item.trim());
+
+                    const dataBruta = colunas[colData] ?? "";
+                    const descricao = colunas[colTexto] ?? "";
+                    const qtdBruta = colunas[colQtd] ?? "";
+
+                    // Captura a primeira Data do documento válida e converte de DD/MM/YYYY para YYYY-MM-DD
+                    if (!dataDocumentoExtraida && dataBruta) {
+                        dataDocumentoExtraida = dataBruta.replace(
+                            /^(\d{2})\/(\d{2})\/(\d{4})$/,
+                            "$3-$2-$1"
+                        );
+                    }
+
+                    // Trata números no formato brasileiro (remove ponto de milhar e troca vírgula decimal por ponto)
+                    const qtdLimpa = qtdBruta.replace(/\./g, "").replace(",", ".");
+                    const quantidade =
+                        qtdLimpa !== "" && !isNaN(Number(qtdLimpa)) ? Number(qtdLimpa) : "";
+
+                    return {
+                        descricao,
+                        quantidade
+                    };
+                })
+                // Ignora as linhas de cabeçalho/subtotal do SAP onde Texto breve e Qtd.do pedido estão vazios
+                .filter((item) => item.descricao !== "" && item.quantidade !== "");
+
+            if (dataDocumentoExtraida) {
+                formik.setFieldValue("dataPrevista", dataDocumentoExtraida);
+            }
 
             if (produtosImportados.length > 0) {
                 const primeiroProdutoVazio =
                     formik.values.produtos.length === 1 &&
                     !formik.values.produtos[0].descricao &&
-                    !formik.values.produtos[0].quantidade
+                    !formik.values.produtos[0].quantidade;
 
-                const novaListaProdutos = primeiroProdutoVazio ? produtosImportados : [...formik.values.produtos, ...produtosImportados];
+                const novaListaProdutos = primeiroProdutoVazio
+                    ? produtosImportados
+                    : [...formik.values.produtos, ...produtosImportados];
 
                 formik.setFieldValue("produtos", novaListaProdutos);
             }
@@ -132,7 +190,7 @@ export default function novoPedido() {
             event.target.value = "";
         };
 
-        reader.readAsText(file, "UTF-8");
+        reader.readAsArrayBuffer(file);
     };
 
     return (
@@ -204,6 +262,7 @@ export default function novoPedido() {
                                             label="Data Prevista"
                                             name="dataPrevista"
                                             id="dataPrev_form"
+                                            value={formik.values.dataPrevista}
                                         />
                                     </td>
                                 </tr>
@@ -272,12 +331,12 @@ export default function novoPedido() {
                             type="button"
                             name="import_csv_form"
                             onclick={() => fileInputRef.current?.click()} />
-                        <input 
+                        <input
                             ref={fileInputRef}
                             type="file"
                             accept=".csv"
                             onChange={importarCSV}
-                            style={{display: "none"}} />
+                            style={{ display: "none" }} />
                         <CustomButtonIcon
                             text="Cancelar"
                             type="button"

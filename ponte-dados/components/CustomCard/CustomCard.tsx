@@ -17,8 +17,8 @@ export const CustomCard = (props: CustomCardProps) => {
         <Card className={
             title === "Recebidos" ? styles.recebido
                 : title === "Aguardando recebimento" ? styles.transito
-                    : styles.nova_compra
-        }>
+                    : styles.em_atraso
+                    }>
             <Card.Body className={ styles.corpo }>
                 <Card.Subtitle className={styles.title}> { title } </Card.Subtitle>
                 <Card.Title className={styles.info}> { info } </Card.Title>

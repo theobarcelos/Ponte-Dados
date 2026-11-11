@@ -36,7 +36,7 @@ export default function Home(props: CustomContainerProps) {
                     <CustomButtonIcon text="Novo Produto" src="/icons/plus.svg" name="novo_produto" onclick={() => router.push("/novo-pedido")} />
                 )}
                 <CustomContainer id="linha">
-                    <CustomCard title="Novas compras" info="12 Pedidos" text="Aguardando aprovação" />
+                    <CustomCard title="Em atraso" info="12 Pedidos" text="Atrasados" />
                     <CustomCard title="Aguardando recebimento" info="08 Pedidos" text="Para serem recebidos" />
                     <CustomCard title="Recebidos" info="03 Pedidos" text="Entregues" />
                 </CustomContainer>
