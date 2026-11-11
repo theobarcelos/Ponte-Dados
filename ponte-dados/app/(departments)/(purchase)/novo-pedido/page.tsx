@@ -116,9 +116,6 @@ export default function novoPedido() {
                 .split(separador)
                 .map((col) => col.trim());
 
-            const idxData = cabecalhoCols.findIndex(
-                (col) => col.includes("data do documento") || col === "data"
-            );
             const idxTextoBreve = cabecalhoCols.findIndex(
                 (col) => col.includes("texto breve") || col.includes("descri")
             );
@@ -130,10 +127,9 @@ export default function novoPedido() {
             );
 
             const possuiCabecalho =
-                idxData !== -1 || idxTextoBreve !== -1 || idxQuantidade !== -1;
+                idxTextoBreve !== -1 || idxQuantidade !== -1;
 
             // Índices das colunas no relatório padrão do SAP (5, 7 e 14) caso não haja cabeçalho customizado
-            const colData = idxData !== -1 ? idxData : 5;
             const colTexto = idxTextoBreve !== -1 ? idxTextoBreve : 7;
             const colQtd = idxQuantidade !== -1 ? idxQuantidade : 14;
 
@@ -145,17 +141,8 @@ export default function novoPedido() {
                 .map((linha) => {
                     const colunas = linha.split(separador).map((item) => item.trim());
 
-                    const dataBruta = colunas[colData] ?? "";
                     const descricao = colunas[colTexto] ?? "";
                     const qtdBruta = colunas[colQtd] ?? "";
-
-                    // Captura a primeira Data do documento válida e converte de DD/MM/YYYY para YYYY-MM-DD
-                    if (!dataDocumentoExtraida && dataBruta) {
-                        dataDocumentoExtraida = dataBruta.replace(
-                            /^(\d{2})\/(\d{2})\/(\d{4})$/,
-                            "$3-$2-$1"
-                        );
-                    }
 
                     // Trata números no formato brasileiro (remove ponto de milhar e troca vírgula decimal por ponto)
                     const qtdLimpa = qtdBruta.replace(/\./g, "").replace(",", ".");
@@ -169,10 +156,6 @@ export default function novoPedido() {
                 })
                 // Ignora as linhas de cabeçalho/subtotal do SAP onde Texto breve e Qtd.do pedido estão vazios
                 .filter((item) => item.descricao !== "" && item.quantidade !== "");
-
-            if (dataDocumentoExtraida) {
-                formik.setFieldValue("dataPrevista", dataDocumentoExtraida);
-            }
 
             if (produtosImportados.length > 0) {
                 const primeiroProdutoVazio =
