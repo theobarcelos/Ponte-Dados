@@ -1,5 +1,5 @@
-import { NextResponse } from '@/src/node_modules/next/server';
-import type { NextRequest } from '@/src/node_modules/next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const ipVisitante = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() 
