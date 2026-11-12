@@ -1,8 +1,8 @@
 "use client";
 
-import { CustomButton } from "@/components/CustomButton/CustomButton";
-import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
-import { CustomInput } from "@/components/CustomInput/CustomInput";
+import { CustomButton } from "@/src/components/CustomButton/CustomButton";
+import { CustomContainer } from "@/src/components/CustomContainer/CustomContainer";
+import { CustomInput } from "@/src/components/CustomInput/CustomInput";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

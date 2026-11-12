@@ -1,8 +1,8 @@
 'use client';
 
-import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
+import { CustomContainer } from "@/src/components/CustomContainer/CustomContainer";
 import styles from "./style.module.css";
-import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
+import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 
 
 

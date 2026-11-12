@@ -1,5 +1,5 @@
 'use client';
-import { CustomNavbar } from "@/components/CustomNavbar/CustomNavbar";
+import { CustomNavbar } from "@/src/components/CustomNavbar/CustomNavbar";
 import { useEffect, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { CustomButton } from "@/components/CustomButton/CustomButton";
-import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
-import { CustomCard } from "@/components/CustomCard/CustomCard";
-import { CustomContainer, CustomContainerProps } from "@/components/CustomContainer/CustomContainer";
+import { CustomButton } from "@/src/components/CustomButton/CustomButton";
+import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
+import { CustomCard } from "@/src/components/CustomCard/CustomCard";
+import { CustomContainer, CustomContainerProps } from "@/src/components/CustomContainer/CustomContainer";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { useEffect, useState } from "react";
 

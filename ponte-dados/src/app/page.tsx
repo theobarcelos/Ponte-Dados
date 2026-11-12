@@ -1,4 +1,4 @@
-import Cadastro from "@/components/Cadastro/Cadastro"
+import Cadastro from "@/src/components/Cadastro/Cadastro"
 
 export default function Login(){
     return(

@@ -1,11 +1,11 @@
 'use client';
 
-import { CustomContainer } from "@/components/CustomContainer/CustomContainer";
-import { CustomInput } from "@/components/CustomInput/CustomInput";
+import { CustomContainer } from "@/src/components/CustomContainer/CustomContainer";
+import { CustomInput } from "@/src/components/CustomInput/CustomInput";
 import { FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./style.module.css";
-import { CustomButtonIcon } from "@/components/CustomButtonIcon/CustomButtonIcon";
+import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
@@ -20,6 +20,8 @@ interface INovoPedido {
     pedido?: string;
     solicitante?: string;
     dataPrevista?: string;
+    status: "Em atraso" | "Aguardando recebimento" | "Recebido";
+    aceitarRejeitar: "Aceito" | "Rejeitado" | null;
     produtos: IProduto[];
 };
 
@@ -57,12 +59,16 @@ export default function novoPedido() {
             pedido: "",
             solicitante: "",
             dataPrevista: "",
+            status: "Aguardando recebimento",
+            aceitarRejeitar: null,
             produtos: [{ ...produtoInicial }]
         },
 
         validationSchema: novoPedidoSchema,
 
-        onSubmit: () => { }
+        onSubmit: () => { 
+            
+        }
 
     })
 
