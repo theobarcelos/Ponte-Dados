@@ -10,6 +10,10 @@ mongoose.connect('mongodb://localhost:27017/PONTE-DADOS')
 
 app.use(express.json());
 
+app.post("/insertNovoPedido", async (req, res) => {
+  
+})
+
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
