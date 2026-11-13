@@ -9,9 +9,9 @@ app.use(cors());
 
 const port = 3010;
 
-const MONGODB_URI = 'mongodb+srv://barcelostheo5_db_user:UZARsYhH01zhemvs@ponte-dados-cluster.od2wpaq.mongodb.net/';
+const mongoKey = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(mongoKey, {
   dbName: "PONTE-DADOS"
 })
   .then(() => console.log('MongoDB conectado com sucesso!'))
