@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
                    || request.headers.get('x-real-ip') 
                    || '';
                    
-  const ipsPermitidos = (process.env.IPS_REDE_EMPRESA || '').split(',').map(ip => ip.trim());
+  const ipsPermitidos = ((process.env.IPS_REDE_EMPRESA || '') || (process.env.IP || '')).split(',').map(ip => ip.trim());
 
   if (process.env.NODE_ENV === 'production' && !ipsPermitidos.includes(ipVisitante)) {
     return new NextResponse(
