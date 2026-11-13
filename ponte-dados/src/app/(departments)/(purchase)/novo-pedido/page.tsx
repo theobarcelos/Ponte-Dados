@@ -30,6 +30,8 @@ const produtoInicial: IProduto = {
     quantidade: ""
 };
 
+const url = 'http://localhost:3010';
+
 
 export default function novoPedido() {
 
@@ -66,8 +68,31 @@ export default function novoPedido() {
 
         validationSchema: novoPedidoSchema,
 
-        onSubmit: () => { 
-            
+        onSubmit: async (values) => { 
+            try {
+                const response = await fetch(`${url}/insertNovoPedido`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ...values,
+                        status: "Aguardando recebimento",
+                        aceitarRejeitar: null
+                    })
+                });
+
+                if(!response.ok) {
+                    const erro = await response.json();
+                    throw new Error(erro.detalhes || "Erro ao salvar pedido!");
+                }
+
+                alert("Pedido cadastrado com sucesso!");
+                router.push("/status");
+            } catch (e) {
+                console.error(e);
+                alert("Erro ao cadastrar pedido");
+            }
         }
 
     })
@@ -313,7 +338,8 @@ export default function novoPedido() {
                             text="Cadastrar pedido"
                             src="/icons/save.svg"
                             type="button"
-                            name="cadastrar_pedido_form" />
+                            name="cadastrar_pedido_form"
+                            onclick={formik.handleSubmit} />
                         <CustomButtonIcon
                             text="Importar arquivo .CSV"
                             src="/icons/csv.svg"
