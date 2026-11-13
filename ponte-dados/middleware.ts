@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
 
   if (process.env.NODE_ENV === 'production' && !ipsPermitidos.includes(ipVisitante)) {
     return new NextResponse(
-      `Acesso restrito a Ponte de Dados.`,
+      `Acesso restrito a Ponte de Dados. Seu número de IP é: ${ipVisitante}`,
       { status: 403 }
     );
   }
