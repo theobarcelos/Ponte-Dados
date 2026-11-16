@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -9,9 +10,7 @@ app.use(cors());
 
 const port = 3010;
 
-const mongoKey = process.env.MONGODB_URI;
-
-mongoose.connect(mongoKey, {
+mongoose.connect(process.env.MONGO_URI, {
   dbName: "PONTE-DADOS"
 })
   .then(() => console.log('MongoDB conectado com sucesso!'))
