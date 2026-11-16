@@ -8,11 +8,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  dbName: "PONTE-DADOS"
-})
-  .then(() => console.log('MongoDB conectado com sucesso!'))
-  .catch((err) => console.log('Erro ao conectar ao MongoDB:', err));
+let isConnected = false;
+async function connectDB() {
+  if (isConnected) return;
+  await mongoose.connect(process.env.MONGO_URI, {
+    dbName: "PONTE-DADOS"
+  });
+  isConnected = true;
+}
 
 
 
@@ -68,6 +71,8 @@ const NovoPedido = mongoose.models.Pedido || mongoose.model("pedido", Pedido);
 
 app.post("/api/insertNovoPedido", async (req, res) => {
   try {
+    await connectDB();
+
     const {
       nf,
       fornecedor,
@@ -114,6 +119,8 @@ app.post("/api/insertNovoPedido", async (req, res) => {
 
 app.get("/api/listarPedidos", async (req, res) => {
   try {
+    await connectDB();
+
     // Busca todos os pedidos no MongoDB, ordenando do mais recente para o mais antigo (_id decrescente)
     const pedidos = await NovoPedido.find().sort({ _id: -1 });
 
