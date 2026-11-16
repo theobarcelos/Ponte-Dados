@@ -68,7 +68,7 @@ const Pedido = new mongoose.Schema(
 
 const NovoPedido = mongoose.model("pedido", Pedido)
 
-app.post("/insertNovoPedido", async (req, res) => {
+app.post("/api/insertNovoPedido", async (req, res) => {
   try {
     const {
       nf,
@@ -114,7 +114,7 @@ app.post("/insertNovoPedido", async (req, res) => {
 
 })
 
-app.get("/listarPedidos", async (req, res) => {
+app.get("/api/listarPedidos", async (req, res) => {
   try {
     // Busca todos os pedidos no MongoDB, ordenando do mais recente para o mais antigo (_id decrescente)
     const pedidos = await NovoPedido.find().sort({ _id: -1 });
