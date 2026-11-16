@@ -5,3 +5,20 @@
 .table th, .table td{
     border: 1px solid black;
 }
+
+.status{
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.aguardo{
+    background-color: var(--laranja);
+}
+
+.atraso{
+    background-color: var(--vermelho);
+}
+
+.recebido{
+    background-color: var(--verde);
+}

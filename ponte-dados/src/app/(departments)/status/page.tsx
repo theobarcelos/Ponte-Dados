@@ -3,10 +3,25 @@
 import { CustomContainer } from "@/src/components/CustomContainer/CustomContainer";
 import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
+import { useEffect, useState } from "react";
+import { IPedido, IProduto } from "../(purchase)/novo-pedido/page";
 
 
 
-export default function status() {
+export default function Status(propsPedido: IPedido, propsProduto: IProduto) {
+
+    const [pedidos, setPedidos] = useState<IPedido[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3010/listarPedidos")
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.sucesso) {
+                    setPedidos(data.dados);
+                }
+            })
+            .catch((err) => console.error("Erro ao carregar pedidos:", err));
+    }, []);
 
 
     return (
@@ -26,25 +41,37 @@ export default function status() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>19800</td>
-                            <td>45001133131</td>
-                            <td>Jailson</td>
-                            <td>13/05/2027</td>
-                            <td>
-                                <select name="" id="">
-                                    <option value="">Selecione...</option>
-                                    <option value="">Em aprovação</option>
-                                    <option value="">Sim</option>
-                                    <option value="">Não</option>
-                                </select>
-                            </td>
-                            <td style={{display: "flex", justifyContent: "space-around"}}>
-                                <CustomButtonIcon src="/icons/check.svg" name="check" img="sim"/>
-                                <CustomButtonIcon src="/icons/close.svg" name="refuse" img="nao" />
-                            </td>
-                            <td>Icone de detalhes</td>
-                        </tr>
+                        {pedidos.length === 0 ? (
+                            <tr>
+                                <td colSpan={7} style={{ textAlign: "center" }}>
+                                    Nenhum pedido cadastrado.
+                                </td>
+                            </tr>
+                        ) : (
+                            pedidos.map((item) => (
+                                <tr key={item._id}>
+                                    <td>{item.nf}</td>
+                                    <td>{item.pedido}</td>
+                                    <td>{item.solicitante}</td>
+                                    <td>{item.dataPrevista}</td>
+                                    <td>
+                                        <select
+                                            defaultValue={item.status}
+                                                className={ styles.status } 
+                                            id="status_select">
+                                                <option value="Aguardando recebimento">Aguardando recebimento</option>
+                                                <option value="Em atraso">Em atraso</option>
+                                                <option value="Recebido">Recebido</option>
+                                        </select>
+                                    </td>
+                                    <td style={{ display: "flex", justifyContent: "space-around", width: "100%", height: "100%" }}>
+                                        <CustomButtonIcon src="/icons/check.svg" name="check" img="sim" />
+                                        <CustomButtonIcon src="/icons/close.svg" name="refuse" img="nao" />
+                                    </td>
+                                    <td>Icone de detalhes</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </CustomContainer>

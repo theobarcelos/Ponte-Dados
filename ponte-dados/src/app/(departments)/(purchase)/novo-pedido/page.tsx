@@ -9,12 +9,13 @@ import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButton
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
-interface IProduto {
+export interface IProduto {
     descricao: string;
     quantidade: number | string;
 };
 
-interface INovoPedido {
+export interface IPedido {
+    _id?: string;
     nf?: string;
     fornecedor?: string;
     pedido?: string;
@@ -43,7 +44,7 @@ export default function novoPedido() {
         fornecedor: Yup.string().required("Campo obrigatório!"),
         pedido: Yup.string().required("Campo obrigatório!"),
         solicitante: Yup.string().required("Campo obrigatório!"),
-        dataPrevista: Yup.date().required("Campo obrigatório!"),
+        dataPrevista: Yup.string().required("Campo obrigatório!"),
         produtos: Yup.array().of(
             Yup.object({
                 descricao: Yup.string().required("Campo obrigatório!"),
@@ -54,7 +55,7 @@ export default function novoPedido() {
 
 
 
-    const formik = useFormik<INovoPedido>({
+    const formik = useFormik<IPedido>({
         initialValues: {
             nf: "",
             fornecedor: "",

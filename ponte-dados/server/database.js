@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const port = 3010;
+const port = Number(process.env.num_port);
 
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "PONTE-DADOS"
@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch((err) => console.log('Erro ao conectar ao MongoDB:', err));
 
 app.use(express.json());
+
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,7 +37,7 @@ const ProdutoSchema = new mongoose.Schema(
   { _id: false } // Evita criar _id em cada item do array.
 );
 
-const NovoPedidoSchema = new mongoose.Schema(
+const Pedido = new mongoose.Schema(
   {
     nf: { type: String, required: true, trim: true },
     fornecedor: { type: String, required: true, trim: true },
@@ -66,7 +67,7 @@ const NovoPedidoSchema = new mongoose.Schema(
   }
 )
 
-const NovoPedido = mongoose.model("NovoPedido", NovoPedidoSchema)
+const NovoPedido = mongoose.model("pedido", Pedido)
 
 app.post("/insertNovoPedido", async (req, res) => {
   try {
@@ -103,7 +104,7 @@ app.post("/insertNovoPedido", async (req, res) => {
       dados: novoDocumento
     })
   } catch (e) {
-    console.error("Erro ao inserir o pedido: ", error)
+    console.error("Erro ao inserir o pedido: ", e)
 
     return res.status(400).json({
       erro: "Falha ao cadastrar pedido",
@@ -114,6 +115,25 @@ app.post("/insertNovoPedido", async (req, res) => {
 
 })
 
+app.get("/listarPedidos", async (req, res) => {
+  try {
+    // Busca todos os pedidos no MongoDB, ordenando do mais recente para o mais antigo (_id decrescente)
+    const pedidos = await NovoPedido.find().sort({ _id: -1 });
+
+    return res.status(200).json({
+      sucesso: true,
+      total: pedidos.length,
+      dados: pedidos
+    });
+  } catch (e) {
+    console.error("Erro ao buscar pedidos: ", e);
+    return res.status(500).json({
+      erro: "Falha ao buscar pedidos",
+      detalhes: e.message
+    });
+  }
+});
+
 app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+  console.log(`Servidor rodando!`);
 });
