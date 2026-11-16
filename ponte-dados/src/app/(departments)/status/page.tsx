@@ -4,11 +4,11 @@ import { CustomContainer } from "@/src/components/CustomContainer/CustomContaine
 import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 import { useEffect, useState } from "react";
-import { IPedido, IProduto } from "../(purchase)/novo-pedido/page";
+import { IPedido } from "@/src/types/pedido";
 
 
 
-export default function status(propsPedido: IPedido, propsProduto: IProduto) {
+export default function status() {
 
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 

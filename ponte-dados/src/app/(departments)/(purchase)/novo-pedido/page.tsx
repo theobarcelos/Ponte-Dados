@@ -8,23 +8,7 @@ import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-
-export interface IProduto {
-    descricao: string;
-    quantidade: number | string;
-};
-
-export interface IPedido {
-    _id?: string;
-    nf?: string;
-    fornecedor?: string;
-    pedido?: string;
-    solicitante?: string;
-    dataPrevista?: string;
-    status: "Em atraso" | "Aguardando recebimento" | "Recebido";
-    aceitarRejeitar: "Aceito" | "Rejeitado" | null;
-    produtos: IProduto[];
-};
+import { IProduto, IPedido } from "@/src/types/pedido";
 
 const produtoInicial: IProduto = {
     descricao: "",
