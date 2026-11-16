@@ -15,13 +15,15 @@ const produtoInicial: IProduto = {
     quantidade: ""
 };
 
-const url = 'http://localhost:3010';
 
 
 export default function novoPedido() {
 
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const url = `http://localhost:3010`;
+
 
     const novoPedidoSchema = Yup.object({
         nf: Yup.string().required("Campo obrigatório!"),

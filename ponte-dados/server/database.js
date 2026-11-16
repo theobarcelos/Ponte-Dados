@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const port = Number(process.env.num_port);
+const port = Number(process.env.NUM_PORT);
 
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "PONTE-DADOS"
