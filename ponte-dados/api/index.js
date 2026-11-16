@@ -1,13 +1,12 @@
-'use server';
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
 const cors = require('cors');
 
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "PONTE-DADOS"
@@ -15,7 +14,6 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(() => console.log('MongoDB conectado com sucesso!'))
   .catch((err) => console.log('Erro ao conectar ao MongoDB:', err));
 
-app.use(express.json());
 
 
 app.use((req, res, next) => {
@@ -66,7 +64,7 @@ const Pedido = new mongoose.Schema(
   }
 )
 
-const NovoPedido = mongoose.model("pedido", Pedido)
+const NovoPedido = mongoose.models.Pedido || mongoose.model("pedido", Pedido);
 
 app.post("/api/insertNovoPedido", async (req, res) => {
   try {
@@ -152,4 +150,4 @@ app.get("/listarPedidos", async (req, res) => {
   }
 });
 
-export default app;
+module.exports = app;
