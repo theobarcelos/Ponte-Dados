@@ -340,7 +340,7 @@ export default function novoPedido() {
                             text="Cancelar"
                             type="button"
                             src="/icons/cancel.svg"
-                            onclick={() => router.push("./prchsfnncl")}
+                            onclick={() => router.push("./prchs")}
                             name="cancelar_form" />
                     </CustomContainer>
                 </form>
