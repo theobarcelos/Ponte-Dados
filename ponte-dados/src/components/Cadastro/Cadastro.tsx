@@ -3,13 +3,29 @@
 import { CustomButton } from "@/src/components/CustomButton/CustomButton";
 import { CustomContainer } from "@/src/components/CustomContainer/CustomContainer";
 import { CustomInput } from "@/src/components/CustomInput/CustomInput";
+import { IPedido } from "@/src/types/pedido";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Cadastro() {
 
+    const url = "http://localhost:3010"
+
     const [codigo, setCodigo] = useState<string>();
     const router = useRouter();
+    const [pedidos, setPedidos] = useState<IPedido[]>([]);
+    
+
+    useEffect(() => {
+            fetch(`${url}/listarPedidos`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.sucesso) {
+                        setPedidos(data.dados);
+                    }
+                })
+                .catch((err) => console.error("Erro ao carregar pedidos:", err));
+        }, [])
 
     return (
         <CustomContainer id="log">

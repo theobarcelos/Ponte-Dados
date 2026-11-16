@@ -1,3 +1,4 @@
+'use server';
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -134,6 +135,28 @@ app.get("/listarPedidos", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Servidor rodando!`);
+app.get("/listarPedidos", async (req, res) => {
+  try {
+    // Busca todos os pedidos no MongoDB, ordenando do mais recente para o mais antigo (_id decrescente)
+    const pedidos = await NovoPedido.find().countDocuments();
+
+    return res.status(200).json({
+      sucesso: true,
+      total: pedidos.length,
+      dados: pedidos
+    });
+  } catch (e) {
+    console.error("Erro ao buscar pedidos: ", e);
+    return res.status(500).json({
+      erro: "Falha ao buscar pedidos",
+      detalhes: e.message
+    });
+  }
 });
+
+// app.listen(port, () => {
+//   console.log(`Servidor rodando!`);
+// });
+
+// module.exports = app;
+export default app;
