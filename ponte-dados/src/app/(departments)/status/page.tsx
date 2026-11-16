@@ -8,7 +8,7 @@ import { IPedido, IProduto } from "../(purchase)/novo-pedido/page";
 
 
 
-export default function Status(propsPedido: IPedido, propsProduto: IProduto) {
+export default function status(propsPedido: IPedido, propsProduto: IProduto) {
 
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
