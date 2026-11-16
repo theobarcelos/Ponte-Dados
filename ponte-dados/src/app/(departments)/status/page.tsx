@@ -10,10 +10,12 @@ import { IPedido } from "@/src/types/pedido";
 
 export default function status() {
 
+    const url = "http://localhost:3010";
+
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:3010/listarPedidos")
+        fetch(`${url}/listarPedidos`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.sucesso) {
@@ -57,11 +59,11 @@ export default function status() {
                                     <td>
                                         <select
                                             defaultValue={item.status}
-                                                className={ styles.status } 
+                                            className={styles.status}
                                             id="status_select">
-                                                <option value="Aguardando recebimento">Aguardando recebimento</option>
-                                                <option value="Em atraso">Em atraso</option>
-                                                <option value="Recebido">Recebido</option>
+                                            <option value="Aguardando recebimento">Aguardando recebimento</option>
+                                            <option value="Em atraso">Em atraso</option>
+                                            <option value="Recebido">Recebido</option>
                                         </select>
                                     </td>
                                     <td style={{ display: "flex", justifyContent: "space-around", width: "100%", height: "100%" }}>
