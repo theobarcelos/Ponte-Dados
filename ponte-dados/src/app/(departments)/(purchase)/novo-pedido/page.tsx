@@ -22,9 +22,6 @@ export default function novoPedido() {
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const url = `http://localhost:3010`;
-
-
     const novoPedidoSchema = Yup.object({
         nf: Yup.string().required("Campo obrigatório!"),
         fornecedor: Yup.string().required("Campo obrigatório!"),
@@ -57,7 +54,7 @@ export default function novoPedido() {
 
         onSubmit: async (values) => { 
             try {
-                const response = await fetch(`${url}/insertNovoPedido`, {
+                const response = await fetch(`/api/insertNovoPedido`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

@@ -9,13 +9,10 @@ import { IPedido } from "@/src/types/pedido";
 
 
 export default function status() {
-
-    const url = "http://localhost:3010";
-
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
     useEffect(() => {
-        fetch(`${url}/listarPedidos`)
+        fetch(`/api/listarPedidos`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.sucesso) {

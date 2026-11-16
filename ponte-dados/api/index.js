@@ -9,8 +9,6 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const port = Number(process.env.NUM_PORT);
-
 mongoose.connect(process.env.MONGO_URI, {
   dbName: "PONTE-DADOS"
 })
@@ -154,9 +152,4 @@ app.get("/listarPedidos", async (req, res) => {
   }
 });
 
-// app.listen(port, () => {
-//   console.log(`Servidor rodando!`);
-// });
-
-// module.exports = app;
 export default app;
