@@ -14,8 +14,24 @@ export default function Home(props: CustomContainerProps) {
     const router = useRouter();
     const segmentoAtivo = useSelectedLayoutSegment();
     const [setorAtual, setSetorAtual] = useState<string>("(purchase)");
+    const [aguardo, setAguardo] = useState('');
+    const [atrasado, setAtrasado] = useState('');;
+    const [recebido, setRecebido] = useState('');;
+    
 
     useEffect(() => {
+        try{
+            fetch("/api/contarPedidos")
+            .then((res) => res.json())
+            .then((data) => {
+                setAguardo(data.aguardandoRecebimento);
+                setAtrasado(data.emAtraso);
+                setRecebido(data.recebidos)
+            });
+        } catch (e) {
+            console.error("Erro: " + e);
+        }
+
         if (segmentoAtivo === "(purchase)" || segmentoAtivo === "(logistics)") {
             setSetorAtual(segmentoAtivo);
             sessionStorage.setItem("setorAtivo", segmentoAtivo);
@@ -36,9 +52,9 @@ export default function Home(props: CustomContainerProps) {
                     <CustomButtonIcon text="Novo Produto" src="/icons/plus.svg" name="novo_produto" onclick={() => router.push("/novo-pedido")} />
                 )}
                 <CustomContainer id="linha">
-                    <CustomCard title="Em atraso" info="12 Pedidos" text="Atrasados" />
-                    <CustomCard title="Aguardando" info="08 Pedidos" text="Para serem recebidos" />
-                    <CustomCard title="Recebidos" info="03 Pedidos" text="Entregues" />
+                    <CustomCard title="Em atraso" info={`${atrasado} pedidos`} text="Atrasados" />
+                    <CustomCard title="Aguardando" info={`${aguardo} pedidos`}  text="Para serem recebidos" />
+                    <CustomCard title="Recebidos" info={`${recebido} pedidos`}  text="Entregues" />
                 </CustomContainer>
                 <CustomButton text="Visualizar status de pedidos" name="status" onclick={() => router.push("/status")}></CustomButton>
             </CustomContainer>

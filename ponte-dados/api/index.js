@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const port = 3010;
+
 let isConnected = false;
 async function connectDB() {
   if (isConnected) return;
@@ -16,18 +18,6 @@ async function connectDB() {
   });
   isConnected = true;
 }
-
-
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
 
 const ProdutoSchema = new mongoose.Schema(
   {
@@ -67,7 +57,7 @@ const Pedido = new mongoose.Schema(
   }
 )
 
-const NovoPedido = mongoose.models.Pedido || mongoose.model("pedido", Pedido);
+const NovoPedido = mongoose.models.pedido || mongoose.model("pedido", Pedido);
 
 app.post("/api/insertNovoPedido", async (req, res) => {
   try {
@@ -117,7 +107,7 @@ app.post("/api/insertNovoPedido", async (req, res) => {
 
 })
 
-app.get("/api/listarPedidos", async (req, res) => {
+app.get("/listarPedidos", async (req, res) => {
   try {
     await connectDB();
 
@@ -138,15 +128,18 @@ app.get("/api/listarPedidos", async (req, res) => {
   }
 });
 
-app.get("/listarPedidos", async (req, res) => {
+app.get("/api/contarPedidos", async (req, res) => {
   try {
-    // Busca todos os pedidos no MongoDB, ordenando do mais recente para o mais antigo (_id decrescente)
-    const pedidos = await NovoPedido.find().countDocuments();
+    await connectDB();
+    
+    const recebidos = await NovoPedido.find({status: "Recebido"}).countDocuments();
+    const aguardando = await NovoPedido.find({status: "Aguardando recebimento"}).countDocuments();
+    const atrasados = await NovoPedido.find({status: "Em atraso"}).countDocuments();
 
     return res.status(200).json({
-      sucesso: true,
-      total: pedidos.length,
-      dados: pedidos
+      recebidos: recebidos,
+      aguardandoRecebimento: aguardando,
+      emAtraso: atrasados
     });
   } catch (e) {
     console.error("Erro ao buscar pedidos: ", e);
@@ -156,5 +149,9 @@ app.get("/listarPedidos", async (req, res) => {
     });
   }
 });
+
+// app.listen(port, () => {
+//   console.log("Porta rodando!")
+// })
 
 module.exports = app;
