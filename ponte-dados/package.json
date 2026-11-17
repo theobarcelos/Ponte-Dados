@@ -15,11 +15,11 @@
     "express": "^5.3.0",
     "formik": "^2.4.9",
     "mongoose": "^9.12.1",
-    "next": "16.4.3",
+    "next": "^16.4.6",
     "nodemon": "^3.1.14",
-    "react": "19.3.0",
+    "react": "^19.3.1",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "19.3.0",
+    "react-dom": "^19.3.1",
     "yup": "^1.7.1"
   },
   "devDependencies": {
