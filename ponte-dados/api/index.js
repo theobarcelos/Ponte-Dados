@@ -107,7 +107,7 @@ app.post("/api/insertNovoPedido", async (req, res) => {
 
 })
 
-app.get("/listarPedidos", async (req, res) => {
+app.get("/api/listarPedidos", async (req, res) => {
   try {
     await connectDB();
 
