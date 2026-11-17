@@ -12,7 +12,7 @@ export default function status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3010/listarPedidos`)
+        fetch(`htpp://localhost:3010/listarPedidos`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.sucesso) {
@@ -54,14 +54,7 @@ export default function status() {
                                     <td>{item.solicitante}</td>
                                     <td>{item.dataPrevista}</td>
                                     <td>
-                                        <select
-                                            defaultValue={item.status}
-                                            className={styles.status}
-                                            id="status_select">
-                                            <option value="Aguardando recebimento">Aguardando recebimento</option>
-                                            <option value="Em atraso">Em atraso</option>
-                                            <option value="Recebido">Recebido</option>
-                                        </select>
+                                        <p>{item.status}</p>
                                     </td>
                                     <td style={{ display: "flex", justifyContent: "space-around", width: "100%", height: "100%" }}>
                                         <CustomButtonIcon src="/icons/check.svg" name="check" img="sim" />
