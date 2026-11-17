@@ -12,7 +12,7 @@ export default function status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3010/listarPedidos`)
+        fetch(`/api/listarPedidos`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.sucesso) {
