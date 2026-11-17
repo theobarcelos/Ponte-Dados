@@ -24,8 +24,9 @@ export const CustomButton = (props: CustomButtonProps) => {
                         : name === "import_csv_form" ? styles.botao_importcsv
                             : name === "cancelar_form" ? styles.botao_cancelar
                                 : name === "cadastrar_pedido_form" ? styles.botao_addprod
-                                    : name === "add_produto_form" ? styles.botao_addprod
-                                        : styles.botao}
+                                    : name === "add_produto_form" ? styles.botao_addprod 
+                                        : name === "detalhes" ? styles.botao_detalhes 
+                                            : styles.botao}
                 variant="primary"
                 id={id}
             > {text}

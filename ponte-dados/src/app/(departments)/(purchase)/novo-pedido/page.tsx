@@ -54,7 +54,7 @@ export default function novoPedido() {
 
         onSubmit: async (values) => { 
             try {
-                const response = await fetch(`/api/insertNovoPedido`, {
+                const response = await fetch(`http://localhost:3010/insertNovoPedido`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

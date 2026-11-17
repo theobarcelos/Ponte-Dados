@@ -21,7 +21,7 @@ export default function Home(props: CustomContainerProps) {
 
     useEffect(() => {
         try{
-            fetch("/api/contarPedidos")
+            fetch("http://localhost:3010/contarPedidos")
             .then((res) => res.json())
             .then((data) => {
                 setAguardo(data.aguardandoRecebimento);

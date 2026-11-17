@@ -5,6 +5,7 @@ import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 import { useEffect, useState } from "react";
 import { IPedido } from "@/src/types/pedido";
+import { CustomButton } from "@/src/components/CustomButton/CustomButton";
 
 
 
@@ -12,7 +13,7 @@ export default function status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
 
     useEffect(() => {
-        fetch(`htpp://localhost:3010/listarPedidos`)
+        fetch(`http://localhost:3010/listarPedidos`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.sucesso) {
@@ -54,13 +55,17 @@ export default function status() {
                                     <td>{item.solicitante}</td>
                                     <td>{item.dataPrevista}</td>
                                     <td>
-                                        <p>{item.status}</p>
+                                        <div className={styles.status_container}>
+                                            <p className={styles.status}>{item.status}</p>
+                                        </div>
                                     </td>
-                                    <td style={{ display: "flex", justifyContent: "space-around", width: "100%", height: "100%" }}>
-                                        <CustomButtonIcon src="/icons/check.svg" name="check" img="sim" />
-                                        <CustomButtonIcon src="/icons/close.svg" name="refuse" img="nao" />
+                                    <td>
+                                        <div className={styles.td_c_r}>
+                                            <CustomButtonIcon src="/icons/check.svg" name="check" />
+                                            <CustomButtonIcon src="/icons/close.svg" name="refuse" />
+                                        </div>
                                     </td>
-                                    <td>Icone de detalhes</td>
+                                    <td><CustomButton text="Detalhes" type="button" name="detalhes" /></td>
                                 </tr>
                             ))
                         )}

@@ -59,6 +59,7 @@ const Pedido = new mongoose.Schema(
 
 const NovoPedido = mongoose.models.pedido || mongoose.model("pedido", Pedido);
 
+// novo-pedido
 app.post("/insertNovoPedido", async (req, res) => {
   try {
     await connectDB();
@@ -107,6 +108,7 @@ app.post("/insertNovoPedido", async (req, res) => {
 
 })
 
+// Status
 app.get("/listarPedidos", async (req, res) => {
   try {
     await connectDB();
@@ -128,6 +130,7 @@ app.get("/listarPedidos", async (req, res) => {
   }
 });
 
+// Home
 app.get("/contarPedidos", async (req, res) => {
   try {
     await connectDB();

@@ -5,17 +5,15 @@ import Button from "react-bootstrap/Button"
 interface CustomButtonIconProps {
     src: string;
     name: string;
-    img?: string;
     text?: string;
     onclick?: () => void;
     type?: "button" | "submit" | "reset";
 }
 
 export const CustomButtonIcon = (props: CustomButtonIconProps) => {
-    const { text, src, onclick, type, name, img} = props;
+    const { text, src, onclick, type, name} = props;
 
     const form = name.includes('_form');
-    const botao = name.includes("botao_");
 
     return (
         <>
@@ -37,7 +35,7 @@ export const CustomButtonIcon = (props: CustomButtonIconProps) => {
             >
                 <img src={src} className={
                     form ? styles.img_form
-                        : img === "sim" || img === "nao" ? styles.img_status
+                        : name === "check" || name === "refuse" ? styles.img_status
                             : styles.img
                 } alt="icon" />
                 {text}
