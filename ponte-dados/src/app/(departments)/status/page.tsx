@@ -4,13 +4,16 @@ import { CustomContainer } from "@/src/components/CustomContainer/CustomContaine
 import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
 import { useEffect, useState } from "react";
-import { IPedido } from "@/src/types/pedido";
+import { IPedido, IProduto } from "@/src/types/pedido";
 import { CustomButton } from "@/src/components/CustomButton/CustomButton";
+import { CustomModal } from "@/src/components/CustomModal/CustomModal";
 
 
 
 export default function status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
+    const [pedidoSelecionado, setPedidoSelecionado] = useState<IPedido>();
+    const [produto, setProduto] = useState<IProduto>();
 
     useEffect(() => {
         fetch(`http://localhost:3010/listarPedidos`)
@@ -23,6 +26,17 @@ export default function status() {
             .catch((err) => console.error("Erro ao carregar pedidos:", err));
     }, []);
 
+    async function detalhesPedido(nf?: string) {
+        try {
+            const pedido = await fetch(`http://localhost:3010/detalhesPedido/${nf}`);
+            const data = await pedido.json();
+
+            const resultado = data.pedido ? data.pedido : data;
+            setPedidoSelecionado(Array.isArray(resultado) ? resultado[0] : resultado);
+        } catch (e) {
+            console.error("Erro: ", e)
+        }
+    }
 
     return (
         <CustomContainer>
@@ -65,12 +79,27 @@ export default function status() {
                                             <CustomButtonIcon src="/icons/close.svg" name="refuse" />
                                         </div>
                                     </td>
-                                    <td><CustomButton text="Detalhes" type="button" name="detalhes" /></td>
+                                    <td><CustomButton text="Detalhes" type="button" name="detalhes" onclick={() => detalhesPedido(item.nf)} /></td>
                                 </tr>
                             ))
                         )}
                     </tbody>
                 </table>
+
+                {pedidoSelecionado && (
+                    <CustomModal
+                        title={`Pedido: ${pedidoSelecionado.pedido || ""}`}
+                        show={!!pedidoSelecionado}
+                        onClose={() => setPedidoSelecionado(undefined)}
+                    >
+                        <p><strong>NF:</strong> {pedidoSelecionado.nf}</p>
+                        <p><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</p>
+                        <p><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</p>
+                        <p><strong>Status:</strong> {pedidoSelecionado.status}</p>
+                        <h3><strong>Produtos:</strong></h3> 
+                        {pedidoSelecionado.produtos.map()}
+                    </CustomModal>
+                )}
             </CustomContainer>
         </CustomContainer>
     )

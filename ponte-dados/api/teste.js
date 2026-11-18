@@ -153,6 +153,19 @@ app.get("/contarPedidos", async (req, res) => {
   }
 });
 
+app.get("/detalhesPedido/:nf", async (req, res) => {
+  try{
+    await connectDB();
+    const pedido = await NovoPedido.find( {nf: req.params.nf}, {_id: false} )
+    res.status(200).json({
+      pedido: pedido
+    });
+  } catch (e) {
+    res.status(500).json(e.message);
+    console.error("Erro: ", e.message);
+  }
+})
+
 app.listen(port, () => {
   console.log("Porta rodando!")
 })
