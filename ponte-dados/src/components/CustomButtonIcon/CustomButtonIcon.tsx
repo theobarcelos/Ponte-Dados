@@ -2,7 +2,7 @@
 import styles from "./CustomButtonIcon.module.css";
 import Button from "react-bootstrap/Button"
 
-interface CustomButtonIconProps {
+export interface CustomButtonIconProps {
     src: string;
     name: string;
     text?: string;

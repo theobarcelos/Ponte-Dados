@@ -87,17 +87,33 @@ export default function status() {
                 </table>
 
                 {pedidoSelecionado && (
-                    <CustomModal
+                    <CustomModal 
                         title={`Pedido: ${pedidoSelecionado.pedido || ""}`}
                         show={!!pedidoSelecionado}
                         onClose={() => setPedidoSelecionado(undefined)}
+                        nf={pedidoSelecionado.nf}
                     >
-                        <p><strong>NF:</strong> {pedidoSelecionado.nf}</p>
-                        <p><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</p>
-                        <p><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</p>
-                        <p><strong>Status:</strong> {pedidoSelecionado.status}</p>
-                        <h3><strong>Produtos:</strong></h3> 
-                        {pedidoSelecionado.produtos.map()}
+                        <table>
+                            <thead>
+                                <tr className={styles.tr_modal}>
+                                    <td><strong>NF:</strong> {pedidoSelecionado.nf}</td>
+                                    <td><strong>Fornecedor:</strong> {pedidoSelecionado.fornecedor}</td>
+                                    <td><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</td>
+                                </tr>
+                                <tr className={styles.tr_modal}>
+                                    <td><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</td>
+                                    <td><strong>Status:</strong> {pedidoSelecionado.status}</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <h3><strong>Produtos:</strong></h3>
+                        {pedidoSelecionado.produtos.map((item, index) => (
+                            <CustomContainer id="form" key={index}>
+                                <h5>Produto {index + 1}</h5>
+                                <p><strong>Descrição:</strong> {item.descricao}</p>
+                                <p><strong>Quantidade:</strong> {item.quantidade}</p>
+                            </CustomContainer>
+                        ))}
                     </CustomModal>
                 )}
             </CustomContainer>

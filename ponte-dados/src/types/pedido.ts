@@ -10,7 +10,7 @@ export interface IPedido {
     pedido?: string;
     solicitante?: string;
     dataPrevista?: string;
-    status: "Em atraso" | "Aguardando recebimento" | "Recebido";
-    aceitarRejeitar: "Aceito" | "Rejeitado" | null;
+    status?: "Em atraso" | "Aguardando recebimento" | "Recebido";
+    aceitarRejeitar?: "Aceito" | "Rejeitado" | null;
     produtos: IProduto[];
 };

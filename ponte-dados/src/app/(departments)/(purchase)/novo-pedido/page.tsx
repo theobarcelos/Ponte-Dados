@@ -6,8 +6,8 @@ import { FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./style.module.css";
 import { CustomButtonIcon } from "@/src/components/CustomButtonIcon/CustomButtonIcon";
-import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { IProduto, IPedido } from "@/src/types/pedido";
 
 const produtoInicial: IProduto = {
@@ -36,7 +36,11 @@ export default function novoPedido() {
         ).min(1, "Adicione no mínimo 1 produto!")
     })
 
+    const searchParams = useSearchParams();
 
+    const notaFiscal = searchParams.get("nf");
+
+    const modoEdicao = notaFiscal !== null;
 
     const formik = useFormik<IPedido>({
         initialValues: {
@@ -52,26 +56,30 @@ export default function novoPedido() {
 
         validationSchema: novoPedidoSchema,
 
-        onSubmit: async (values) => { 
+        onSubmit: async (values) => {
             try {
-                const response = await fetch(`http://localhost:3010/insertNovoPedido`, {
-                    method: "POST",
+                const url =
+                    modoEdicao ? `http://localhost:3010/atualizarPedido/${notaFiscal}`
+                        : `http://localhost:3010/insertNovoPedido`;
+
+                const response = await fetch(url, {
+                    method: modoEdicao ? "PUT" : "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
+                    body: JSON.stringify( modoEdicao ? values : {
                         ...values,
                         status: "Aguardando recebimento",
                         aceitarRejeitar: null
                     })
                 });
 
-                if(!response.ok) {
+                if (!response.ok) {
                     const erro = await response.json();
                     throw new Error(erro.detalhes || "Erro ao salvar pedido!");
                 }
 
-                alert("Pedido cadastrado com sucesso!");
+                alert(modoEdicao ? `Pedido ${formik.values.pedido} atualizado com sucesso!` : "Pedido cadastrado com sucesso!");
                 router.push("/status");
             } catch (e) {
                 console.error(e);
@@ -191,9 +199,39 @@ export default function novoPedido() {
         reader.readAsArrayBuffer(file);
     };
 
+    useEffect(() => {
+
+        if (!modoEdicao) return;
+
+        const carregarPedido = async () => {
+            try {
+                const response = await fetch(`http://localhost:3010/detalhesPedido/${notaFiscal}`);
+                const pedido = await response.json();
+
+                if (!pedido) return;
+
+                formik.setValues({
+                    nf: pedido.pedido[0].nf || "",
+                    fornecedor: pedido.pedido[0].fornecedor || "",
+                    pedido: pedido.pedido[0].pedido || "",
+                    solicitante: pedido.pedido[0].solicitante || "",
+                    dataPrevista: pedido.pedido[0].dataPrevista || "",
+                    status: pedido.status || "Aguardando recebimento",
+                    aceitarRejeitar: pedido.aceitarRejeitar ?? null,
+                    produtos: pedido.pedido[0].produtos?.length > 0 ? pedido.pedido[0].produtos : [{ ...produtoInicial }]
+                })
+
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        carregarPedido()
+    }, [modoEdicao, notaFiscal])
+
     return (
         <CustomContainer>
-            <h1 style={{ marginTop: "30px" }}>Novo Pedido</h1>
+            <h1 style={{ marginTop: "30px" }}>{modoEdicao ? "Editar Pedido" : "Novo Pedido"}</h1>
             <p style={{ margin: "0" }}>Informações do pedido, previsão de recebimento e dados dos produtos.</p>
             <FormikProvider value={formik}>
                 <form onSubmit={formik.handleSubmit} className={styles.form}>
@@ -210,6 +248,7 @@ export default function novoPedido() {
                                             name="nf"
                                             id="nf_form"
                                             placeholder="Nota Fiscal"
+                                            value={formik.values.nf}
                                         />
                                     </td>
                                     <td className={styles.td}>
@@ -220,6 +259,7 @@ export default function novoPedido() {
                                             name="fornecedor"
                                             id="fornecedor_form"
                                             placeholder="Fornecedor"
+                                            value={formik.values.fornecedor}
                                         />
                                     </td>
                                 </tr>
@@ -232,6 +272,7 @@ export default function novoPedido() {
                                             name="pedido"
                                             id="pedido_form"
                                             placeholder="Pedido"
+                                            value={formik.values.pedido}
                                         />
                                     </td>
                                     <td className={styles.td}>
@@ -242,6 +283,7 @@ export default function novoPedido() {
                                             name="solicitante"
                                             id="solicitante_form"
                                             placeholder="Solicitante"
+                                            value={formik.values.solicitante}
                                         />
                                     </td>
                                 </tr>
@@ -319,7 +361,7 @@ export default function novoPedido() {
                             onclick={adicionarNovoProduto}
                             name="add_produto_form" />
                         <CustomButtonIcon
-                            text="Cadastrar pedido"
+                            text={modoEdicao ? "Salvar alterações" : "Cadastrar pedido"}
                             src="/icons/save.svg"
                             type="button"
                             name="cadastrar_pedido_form"

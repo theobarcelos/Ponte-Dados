@@ -130,14 +130,74 @@ app.get("/listarPedidos", async (req, res) => {
   }
 });
 
+app.put("/atualizarPedido/:nf", async (req, res) => {
+  try {
+    await connectDB();
+    const {
+      nf,
+      fornecedor,
+      pedido,
+      solicitante,
+      dataPrevista,
+      status,
+      aceitarRejeitar,
+      produtos
+    } = req.body;
+
+    const produtosFormatados = Array.isArray(produtos)
+      ? produtos.map((item) => ({
+        descricao: item.descricao,
+        quantidade: Number(item.quantidade)
+      }))
+      : [];
+
+    const atualizar = await NovoPedido.updateOne(
+      { nf: req.params.nf },
+      {
+        $set: {
+          nf,
+          fornecedor,
+          pedido,
+          solicitante,
+          dataPrevista,
+          status: status || "Aguardando recebimento",
+          aceitarRejeitar: aceitarRejeitar ?? null,
+          produtos: produtosFormatados
+        }
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!atualizar) {
+      return res.status(404).json({
+        erro: "Pedido não encontrado para a NF informada."
+      });
+    }
+
+    return res.status(201).json({
+      pedidoAtt: atualizar
+    })
+    
+  } catch (e) {
+    console.error("Erro ao atualizar pedido: ", e.message);
+    return res.status(400).json({
+      erro: "Falha ao atualizar pedido",
+      detalhes: e.message
+    });
+  }
+})
+
 // Home
 app.get("/contarPedidos", async (req, res) => {
   try {
     await connectDB();
-    
-    const recebidos = await NovoPedido.find({status: "Recebido"}).countDocuments();
-    const aguardando = await NovoPedido.find({status: "Aguardando recebimento"}).countDocuments();
-    const atrasados = await NovoPedido.find({status: "Em atraso"}).countDocuments();
+
+    const recebidos = await NovoPedido.find({ status: "Recebido" }).countDocuments();
+    const aguardando = await NovoPedido.find({ status: "Aguardando recebimento" }).countDocuments();
+    const atrasados = await NovoPedido.find({ status: "Em atraso" }).countDocuments();
 
     return res.status(200).json({
       recebidos: recebidos,
@@ -154,9 +214,9 @@ app.get("/contarPedidos", async (req, res) => {
 });
 
 app.get("/detalhesPedido/:nf", async (req, res) => {
-  try{
+  try {
     await connectDB();
-    const pedido = await NovoPedido.find( {nf: req.params.nf}, {_id: false} )
+    const pedido = await NovoPedido.find({ nf: req.params.nf }, { _id: false })
     res.status(200).json({
       pedido: pedido
     });

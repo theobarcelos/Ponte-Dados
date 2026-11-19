@@ -1,1 +1,5 @@
 GET http://localhost:3010/detalhesPedido/0091
+
+###
+
+PUT http://localhost:3010/atualizarPedido/5006
