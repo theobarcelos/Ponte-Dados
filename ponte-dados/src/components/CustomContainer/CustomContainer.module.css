@@ -45,3 +45,27 @@
     border: 0.5px solid #808080;
     border-radius: 16px;
 }
+
+.modal_box{
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+    background-color: #F8FAFC;
+    border: 0.5px solid #808080;
+    border-radius: 16px;
+    margin-bottom: 30px;
+}
+
+.main_data_modal{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #F8FAFC;
+    border: 0.5px solid #808080;
+    border-radius: 16px;
+    margin: 10px;
+}

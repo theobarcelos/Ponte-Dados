@@ -249,6 +249,7 @@ export default function novoPedido() {
                                             id="nf_form"
                                             placeholder="Nota Fiscal"
                                             value={formik.values.nf}
+                                            disabled={modoEdicao}
                                         />
                                     </td>
                                     <td className={styles.td}>
@@ -273,6 +274,7 @@ export default function novoPedido() {
                                             id="pedido_form"
                                             placeholder="Pedido"
                                             value={formik.values.pedido}
+                                            disabled={modoEdicao}
                                         />
                                     </td>
                                     <td className={styles.td}>
@@ -382,7 +384,7 @@ export default function novoPedido() {
                             text="Cancelar"
                             type="button"
                             src="/icons/cancel.svg"
-                            onclick={() => router.push("./prchs")}
+                            onclick={modoEdicao ? () => router.push('./status') : () => router.push("./prchs")}
                             name="cancelar_form" />
                     </CustomContainer>
                 </form>

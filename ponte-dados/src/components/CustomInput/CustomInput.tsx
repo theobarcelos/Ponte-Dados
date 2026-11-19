@@ -10,10 +10,11 @@ interface CustomInputProps{
     name?: string;
     placeholder?: string;
     change?: (e: any) => void;
+    disabled?: boolean;
 }
 
 export const CustomInput = (props: CustomInputProps) => {
-    const {type, label, id, name, placeholder, change, value} = props;
+    const {type, label, id, name, placeholder, change, value, disabled} = props;
     
     const form = id.includes('_form');
 
@@ -29,6 +30,7 @@ export const CustomInput = (props: CustomInputProps) => {
                 placeholder={ placeholder }
                 onChange={ change }
                 value={ value }
+                disabled={disabled}
                 >
                 </Form.Control>
             </Form.Group>
