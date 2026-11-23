@@ -17,7 +17,7 @@ const produtoInicial: IProduto = {
 
 
 
-export default function novoPedido() {
+export default function NovoPedido() {
 
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null);
