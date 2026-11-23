@@ -249,7 +249,6 @@ export default function novoPedido() {
                                             id="nf_form"
                                             placeholder="Nota Fiscal"
                                             value={formik.values.nf}
-                                            disabled={modoEdicao}
                                         />
                                     </td>
                                     <td className={styles.td}>
@@ -274,7 +273,6 @@ export default function novoPedido() {
                                             id="pedido_form"
                                             placeholder="Pedido"
                                             value={formik.values.pedido}
-                                            disabled={modoEdicao}
                                         />
                                     </td>
                                     <td className={styles.td}>

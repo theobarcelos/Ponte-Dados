@@ -1,0 +1,28 @@
+.default{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 16px;
+}
+
+.aguardando{
+    background-color: var(--laranja);
+}
+
+.atraso{
+    background-color: var(--vermelho);
+}
+
+.recebido{
+    background-color: var(--verde);
+}
+
+.common{
+    background-color: none;
+}
+
+.paragraph{
+    margin: 0;
+    padding: 10px;
+}

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { CustomButtonIcon } from "../CustomButtonIcon/CustomButtonIcon";
+import styles from "./CustomModal.module.css";
+import { CustomStatus } from "../CustomStatus/CustomStatus";
 
 interface CustomModalProps{
     title?: string;
@@ -12,11 +14,12 @@ interface CustomModalProps{
     show: boolean;
     nf?: string; 
     onClose: () => void;
+    status?: string;
 }
 
 export const CustomModal = (props: CustomModalProps) => {
 
-    const { title, children, show, onClose, nf } = props;
+    const { title, children, show, onClose, nf, status } = props;
 
     const router = useRouter();
 
@@ -29,10 +32,11 @@ export const CustomModal = (props: CustomModalProps) => {
         show={show}
         onHide={onClose}
       >
-        <Modal.Header closeButton>
+        <Modal.Header className={styles.header} closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             { title }
           </Modal.Title>
+          <CustomStatus text={status}/>
         </Modal.Header>
         <Modal.Body>
           {children}

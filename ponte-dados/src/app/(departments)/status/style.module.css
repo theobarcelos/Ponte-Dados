@@ -2,25 +2,12 @@
     width: 100%;
 }
 
-.table th,
+/* .table th,
 .table td {
     border: 1px solid black;
-}
+} */
 
 .td_c_r {
     display: flex;
     justify-content: space-around;
-}
-
-.status_container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.status {
-    background-color: orange;
-    text-align: center;
-    padding: 10px;
-    border-radius: 16px;
 }

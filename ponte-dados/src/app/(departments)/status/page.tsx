@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { IPedido, IProduto } from "@/src/types/pedido";
 import { CustomButton } from "@/src/components/CustomButton/CustomButton";
 import { CustomModal } from "@/src/components/CustomModal/CustomModal";
+import { CustomStatus } from "@/src/components/CustomStatus/CustomStatus";
 
 
 
-export default function status() {
+export default function Status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
     const [pedidoSelecionado, setPedidoSelecionado] = useState<IPedido>();
     const [produto, setProduto] = useState<IProduto>();
@@ -69,9 +70,7 @@ export default function status() {
                                     <td>{item.solicitante}</td>
                                     <td>{item.dataPrevista}</td>
                                     <td>
-                                        <div className={styles.status_container}>
-                                            <p className={styles.status}>{item.status}</p>
-                                        </div>
+                                        <CustomStatus text={item.status}/>
                                     </td>
                                     <td>
                                         <div className={styles.td_c_r}>
@@ -92,18 +91,18 @@ export default function status() {
                         show={!!pedidoSelecionado}
                         onClose={() => setPedidoSelecionado(undefined)}
                         nf={pedidoSelecionado.nf}
+                        status={pedidoSelecionado.status}
                     >
                         <CustomContainer id="modal_main">
                             <table className={styles.table}>
                                 <thead>
-                                    <tr className={styles.tr_modal}>
+                                    <tr>
                                         <td><strong>NF:</strong> {pedidoSelecionado.nf}</td>
                                         <td><strong>Fornecedor:</strong> {pedidoSelecionado.fornecedor}</td>
                                         <td><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</td>
                                     </tr>
-                                    <tr className={styles.tr_modal}>
+                                    <tr>
                                         <td><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</td>
-                                        <td><strong>Status:</strong> {pedidoSelecionado.status}</td>
                                     </tr>
                                 </thead>
                             </table>
