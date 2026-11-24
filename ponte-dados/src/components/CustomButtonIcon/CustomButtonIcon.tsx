@@ -11,7 +11,7 @@ export interface CustomButtonIconProps {
 }
 
 export const CustomButtonIcon = (props: CustomButtonIconProps) => {
-    const { text, src, onclick, type, name} = props;
+    const { text, src, onclick, type, name } = props;
 
     const form = name.includes('_form');
 
@@ -28,15 +28,17 @@ export const CustomButtonIcon = (props: CustomButtonIconProps) => {
                                 : name === "add_produto_form" ? `${styles.botao_addprod} ${styles.botao_form}`
                                     : name === "check" ? `${styles.botao_check} ${styles.botao_status}`
                                         : name === "refuse" ? `${styles.botao_refuse} ${styles.botao_status}`
-                                            : form ? styles.botao_form
-                                                : styles.botao
+                                            : name === "cadastrar_pedido_module" ? `${styles.botao_save_module} ${styles.botao_status}`
+                                                : form ? styles.botao_form
+                                                    : styles.botao
                 }
                 variant="primary"
             >
                 <img src={src} className={
                     form ? styles.img_form
                         : name === "check" || name === "refuse" ? styles.img_status
-                            : styles.img
+                            : name === "cadastrar_pedido_module" ? styles.img_module
+                                : styles.img
                 } alt="icon" />
                 {text}
             </Button>

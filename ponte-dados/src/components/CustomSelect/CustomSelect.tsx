@@ -30,9 +30,9 @@ export const CustomSelect = (props: PropsCustomSelect) => {
                 name={name}
                 className={
                     value === "Aguardando recebimento" ? `${styles.aguardando} ${styles.status} `
-                    : value === "Em atraso" ? `${styles.status} ${styles.atraso}`
-                    : value === "Recebido" ? `${styles.status} ${styles.recebido}`
-                    : styles.status
+                        : value === "Em atraso" ? `${styles.status} ${styles.atraso}`
+                            : value === "Recebido" ? `${styles.status} ${styles.recebido}`
+                                : styles.status
                 }
             >
 
@@ -40,6 +40,7 @@ export const CustomSelect = (props: PropsCustomSelect) => {
                     <option
                         key={option.id}
                         value={option.value}
+                        className={`${styles.status} ${styles.option}`}
                     >
                         {option.label}
                     </option>

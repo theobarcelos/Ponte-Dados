@@ -15,7 +15,7 @@ import { CustomSelect } from "@/src/components/CustomSelect/CustomSelect";
 export default function Status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
     const [pedidoSelecionado, setPedidoSelecionado] = useState<IPedido>();
-    
+    const [status, setStatus] = useState("Aguardando recebimento");    
     const opcoes = [
         { id: "1", value: "Aguardando recebimento", label: "Aguardando recebimento" },
         { id: "2", value: "Em atraso", label: "Em atraso" },
@@ -104,7 +104,10 @@ export default function Status() {
                             <CustomContainer id="modal_main">
                                 <p><strong>NF:</strong> {pedidoSelecionado.nf}</p>
                             </CustomContainer>
-                            <CustomSelect name="status" options={opcoes}></CustomSelect>
+                            <CustomSelect name="status" value={status} options={opcoes} change={(v) => {
+                                const value = v.target.value;
+                                setStatus(value);
+                            }}></CustomSelect>
                         </div>
                         <CustomContainer id="modal_main">
                             <p><strong>Fornecedor:</strong> {pedidoSelecionado.fornecedor}</p>
@@ -112,9 +115,12 @@ export default function Status() {
                         <CustomContainer id="modal_main">
                             <p><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</p>
                         </CustomContainer>
-                        <CustomContainer id="modal_main">
-                            <p><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</p>
-                        </CustomContainer>
+                        <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                            <CustomContainer id="modal_main">
+                                <p><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</p>
+                            </CustomContainer>
+                            <CustomButtonIcon src="/icons/save.svg" text="Salvar alterações" name="cadastrar_pedido_module" ></CustomButtonIcon>
+                        </div>
                         
 
 

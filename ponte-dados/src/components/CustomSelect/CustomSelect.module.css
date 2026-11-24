@@ -1,20 +1,24 @@
 .status{
     border: 0.5px solid #B3B3B3;
+    background-color: #FFFFFF;
+    border-radius: 16px;
 }
 
 .status:focus{
-    border: 1px solid #0F172A;
     box-shadow: none;
 }
 
 .aguardando{
     background-color: var(--laranja);
+    border: none;
 }
 
 .atraso{
     background-color: var(--vermelho);
+    border: none;
 }
 
 .recebido{
     background-color: var(--verde);
+    border: none;
 }

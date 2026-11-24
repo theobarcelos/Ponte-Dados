@@ -190,6 +190,14 @@ app.put("/atualizarPedido/:nf", async (req, res) => {
   }
 })
 
+/* app.put("/atualizarStatus", async (req, res) => {
+  try{
+    await connectDB();
+    const status = req.body.status;
+    const atualizar = await NovoPedido.updateOne()
+  }
+}) */
+
 // Home
 app.get("/contarPedidos", async (req, res) => {
   try {
