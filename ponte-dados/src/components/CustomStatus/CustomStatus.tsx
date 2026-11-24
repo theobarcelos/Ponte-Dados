@@ -3,7 +3,7 @@
 import styles from "./CustomStatus.module.css"
 
 interface CustomStatusProps {
-    text?: string;
+    text: "Aguardando recebimento" | "Em atraso" | "Recebido" | null | undefined;
 }
 
 export const CustomStatus = (props: CustomStatusProps) => {

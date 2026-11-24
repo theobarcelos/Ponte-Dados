@@ -1,9 +1,0 @@
-:global(.modal-header){
-    justify-content: space-around;
-}
-:global(.btn-close){
-    margin: 0 !important;
-}
-
-
-

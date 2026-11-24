@@ -1,1 +1,20 @@
-    
+.status{
+    border: 0.5px solid #B3B3B3;
+}
+
+.status:focus{
+    border: 1px solid #0F172A;
+    box-shadow: none;
+}
+
+.aguardando{
+    background-color: var(--laranja);
+}
+
+.atraso{
+    background-color: var(--vermelho);
+}
+
+.recebido{
+    background-color: var(--verde);
+}
