@@ -190,13 +190,24 @@ app.put("/atualizarPedido/:nf", async (req, res) => {
   }
 })
 
-/* app.put("/atualizarStatus", async (req, res) => {
+app.put("/atualizarStatus", async (req, res) => {
   try{
     await connectDB();
-    const status = req.body.status;
-    const atualizar = await NovoPedido.updateOne()
+    const { nf, status } = req.body;
+    const atualizar = await NovoPedido.updateOne(
+       { nf: nf },
+       { $set: { status: status } } 
+    )
+    res.status(201).json({
+      status: status
+    })
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).json({
+      e
+    })
   }
-}) */
+})
 
 // Home
 app.get("/contarPedidos", async (req, res) => {

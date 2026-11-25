@@ -9,13 +9,17 @@ import { CustomButton } from "@/src/components/CustomButton/CustomButton";
 import { CustomModal } from "@/src/components/CustomModal/CustomModal";
 import { CustomStatus } from "@/src/components/CustomStatus/CustomStatus";
 import { CustomSelect } from "@/src/components/CustomSelect/CustomSelect";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Status() {
     const [pedidos, setPedidos] = useState<IPedido[]>([]);
     const [pedidoSelecionado, setPedidoSelecionado] = useState<IPedido>();
-    const [status, setStatus] = useState("Aguardando recebimento");    
+    const [status, setStatus] = useState<IPedido["status"]>();
+
+    const router = useRouter();
+
     const opcoes = [
         { id: "1", value: "Aguardando recebimento", label: "Aguardando recebimento" },
         { id: "2", value: "Em atraso", label: "Em atraso" },
@@ -39,9 +43,47 @@ export default function Status() {
             const data = await pedido.json();
 
             const resultado = data.pedido ? data.pedido : data;
-            setPedidoSelecionado(Array.isArray(resultado) ? resultado[0] : resultado);
+            const pedidoEncontrado = Array.isArray(resultado) ? resultado[0] : resultado;
+
+            setPedidoSelecionado(pedidoEncontrado)
+
+            if (pedidoEncontrado?.status) {
+            setStatus(pedidoEncontrado.status);
+        }
         } catch (e) {
             console.error("Erro: ", e)
+        }
+    }
+
+    async function atualizarStatus() {
+        try {
+            const atualizar = await fetch("http://localhost:3010/atualizarStatus", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nf: pedidoSelecionado?.nf,
+                    status: status
+                })
+            });
+
+            const data = await atualizar.json();
+
+            if (data.sucesso) {
+                setPedidos((prevPedidos) => 
+                    prevPedidos.map((item) =>
+                        item.nf === pedidoSelecionado?.nf ? { ...item, status: status } : item
+                    )
+                )
+            }
+            // Fecha o modal
+            setPedidoSelecionado(undefined);
+
+            window.location.reload();
+
+        } catch (e) {
+            console.error(`O erro foi ${e}`);
         }
     }
 
@@ -100,12 +142,12 @@ export default function Status() {
                     >
 
 
-                        <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                             <CustomContainer id="modal_main">
                                 <p><strong>NF:</strong> {pedidoSelecionado.nf}</p>
                             </CustomContainer>
                             <CustomSelect name="status" value={status} options={opcoes} change={(v) => {
-                                const value = v.target.value;
+                                const value = v.target.value as IPedido["status"];
                                 setStatus(value);
                             }}></CustomSelect>
                         </div>
@@ -115,18 +157,18 @@ export default function Status() {
                         <CustomContainer id="modal_main">
                             <p><strong>Solicitante:</strong> {pedidoSelecionado.solicitante}</p>
                         </CustomContainer>
-                        <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                             <CustomContainer id="modal_main">
                                 <p><strong>Data Prevista:</strong> {pedidoSelecionado.dataPrevista}</p>
                             </CustomContainer>
-                            <CustomButtonIcon src="/icons/save.svg" text="Salvar alterações" name="cadastrar_pedido_module" ></CustomButtonIcon>
+                            <CustomButtonIcon src="/icons/save.svg" onclick={ atualizarStatus } text="Salvar alterações" name="cadastrar_pedido_module" ></CustomButtonIcon>
                         </div>
-                        
 
 
 
 
-                        <h3 style={{marginTop: "40px"}}><strong>Produtos {`(${pedidoSelecionado.produtos.length} itens)`}</strong></h3>
+
+                        <h3 style={{ marginTop: "40px" }}><strong>Produtos {`(${pedidoSelecionado.produtos.length} itens)`}</strong></h3>
                         {pedidoSelecionado.produtos.map((item, index) => (
                             <CustomContainer id="modal_box_product" key={index}>
                                 <h5>Produto {index + 1}</h5>
