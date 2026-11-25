@@ -67,25 +67,25 @@ export default function NovoPedido() {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify( modoEdicao ? values : {
+                    body: JSON.stringify(modoEdicao ? values : {
                         ...values,
                         status: "Aguardando recebimento",
                         aceitarRejeitar: null
                     })
                 });
 
-                if (!response.ok) {
-                    const erro = await response.json();
-                    throw new Error(erro.detalhes || "Erro ao salvar pedido!");
-                }
+                    if (!response.ok) {
+                        const erro = await response.json();
+                        throw new Error(erro.detalhes || "Erro ao salvar pedido!");
+                    }
 
-                alert(modoEdicao ? `Pedido ${formik.values.pedido} atualizado com sucesso!` : "Pedido cadastrado com sucesso!");
-                router.push("/status");
-            } catch (e) {
-                console.error(e);
-                alert("Erro ao cadastrar pedido");
+                    alert(modoEdicao ? `Pedido ${formik.values.pedido} atualizado com sucesso!` : "Pedido cadastrado com sucesso!");
+                    router.push("/status");
+                } catch (e) {
+                    console.error(e);
+                    alert("Erro ao cadastrar pedido");
+                }
             }
-        }
 
     })
 
